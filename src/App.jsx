@@ -1,12 +1,13 @@
+import React from 'react';
+import Navbar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function App() {
-  const [count, setCount] = useState(0)
-
+function App() {
   return (
-    <>
-
-    </>
-  )
+    <div className="App">
+      <Navbar />
+    </div>
+  );
 }
 
-
+export default App;
