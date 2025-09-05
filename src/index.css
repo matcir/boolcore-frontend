@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bg-color-boolcore {
+  background-color: #0b121f;
+}
+.bg-color-jumbo {
+  background-color: #203000;
+}
+.acid-text {
+  color: #9fef00;
+}
