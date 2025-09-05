@@ -19,6 +19,7 @@
 }
 .bg-color-jumbo {
   background-color: rgba(32, 48, 0, 0.9); /* più chiaro e trasparente */
+  border: solid 1px rgb(97, 138, 97);
 }
 .acid-text {
   color: #9fef00;
@@ -30,6 +31,7 @@
 
 .card-jumbo {
   background-color: rgba(17, 27, 47, 0.8);
+  border: solid 1px rgb(97, 138, 97);
 }
 .card-jumbo p {
   font-size: 18px;
