@@ -25,8 +25,8 @@ function DataProvider({ children }) {
     return (
         <DataContext.Provider
             value={{
-                movies,
-                setMovies,
+                products,
+                setProducts,
             }}
         >
             {children}
