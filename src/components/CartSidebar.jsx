@@ -1,4 +1,4 @@
-import { useCart } from "../Context/CartContext";
+import { useCart } from "../contexts/CartContext";
 import CartItem from "./CartItem";
 
 export default function CartSidebar() {
