@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 export default function CarouselCard({ product }) {
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -15,23 +17,23 @@ export default function CarouselCard({ product }) {
         <div className="row w-100 mb-4">
             <div className="col-6 position-relative">
                 <img
-                    src={product.images[currentIndex]}
+                    src={`http://localhost:3000/public/${product.images[currentIndex]}`}
                     alt={product.name}
                     className="img-fluid rounded" />
                 <button
-                    className="btn btn-light position-absolute top-50 start-0 translate-middle-y"
+                    className="btn position-absolute top-50 start-0 translate-middle-y"
                     onClick={handlePrev}>
                     ◀
                 </button>
                 <button
-                    className="btn btn-light position-absolute top-50 end-0 translate-middle-y"
+                    className="btn position-absolute top-50 end-0 translate-middle-y"
                     onClick={handleNext}>
                     ▶
                 </button>
             </div>
 
-            <div className="col-6">
-                <h3>{product.name}</h3>
+            <div className="col-6 d-flex flex-column justify-content-center align-items-center">
+                <h1>{product.name}</h1>
                 <p>{product.description}</p>
                 <p>{product.price}</p>
             </div>
