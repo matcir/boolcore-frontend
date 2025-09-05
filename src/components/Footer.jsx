@@ -1,6 +1,6 @@
 export default function Footer() {
 	return (
-		<footer className="bg-color-boolcore py-4 ">
+		<footer className="bg-color-boolcore p-4  ">
 			<div className="container ">
 				<img
 					src="/logo.png"
