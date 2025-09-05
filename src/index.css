@@ -18,7 +18,7 @@
   min-height: 100vh; /* prende almeno tutta l'altezza della finestra */
 }
 .bg-color-jumbo {
-  background-color: #203000;
+  background-color: rgba(32, 48, 0, 0.9); /* più chiaro e trasparente */
 }
 .acid-text {
   color: #9fef00;
@@ -31,12 +31,12 @@
 .card-jumbo {
   background-color: rgba(17, 27, 47, 0.8);
 }
-.card-jumbo {
-  font-size: 18px; /* scegli la dimensione che preferisci */
+.card-jumbo p {
+  font-size: 18px;
 }
 
 .jumbotron p {
-  font-size: 18px;
+  font-size: 20px;
 }
 .bg-color-footer {
   background-color: #212529;
