@@ -1,3 +1,5 @@
+@import "bootstrap";
+@import "bootstrap-icons";
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,15 @@
 }
 
 .bg-color-boolcore {
+  padding-top: 10px;
   background-color: #0b121f;
+  background-image: url(../public/img/bg-home.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-blend-mode: lighten;
+  opacity: 0.9;
+  min-height: 100vh; /* prende almeno tutta l'altezza della finestra */
 }
 .bg-color-jumbo {
   background-color: #203000;
@@ -19,5 +29,15 @@
 }
 
 .card-jumbo {
-  background-color: #111b2f;
+  background-color: rgba(17, 27, 47, 0.8);
+}
+.card-jumbo {
+  font-size: 18px; /* scegli la dimensione che preferisci */
+}
+
+.jumbotron p {
+  font-size: 18px;
+}
+.bg-color-footer {
+  background-color: #212529;
 }
