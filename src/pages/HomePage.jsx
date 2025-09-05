@@ -15,7 +15,7 @@ export default function HomePage() {
                                 title="PC Fissi"
                                 description="Scopri la nostra selezione di computer desktop."
                                 link="/products?category=pc"
-                                img_cover="https://picsum.photos/seed/pcfissi/400/200"
+                                img_cover="./img/desktop.jpg"
                             />
                         </div>
                         <div className="col-md-6">
@@ -23,7 +23,7 @@ export default function HomePage() {
                                 title="Portatili"
                                 description="Scopri la nostra selezione di computer Laptop."
                                 link="/products?category=portatili"
-                                img_cover="https://picsum.photos/seed/laptop/400/200"
+                                img_cover="./img/notebook.jpg"
                             />
                         </div>
                         <div className="col-md-6">
@@ -31,7 +31,7 @@ export default function HomePage() {
                                 title="Accessori"
                                 description="Tastiere, mouse, cuffie e molto altro per il tuo setup."
                                 link="/products?category=accessori"
-                                img_cover="https://picsum.photos/seed/accessori/400/200"
+                                img_cover="./img/accessori.jpg"
                             />
                         </div>
                     </div>
