@@ -15,7 +15,7 @@ export default function HomePage() {
                                 title="PC Fissi"
                                 description="Scopri la nostra selezione di computer desktop."
                                 link="/products?category=pc"
-                                img_cover="https://picsum.photos/seed/pcfissi/400/200"
+                                img_cover="./img/desktop.jpg"
                             />
                         </div>
                         <div className="col-md-6">
