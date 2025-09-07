@@ -11,16 +11,20 @@ function DataProvider({ children }) {
     useEffect(() => {
         setLoading(true);
         fetch(productsUrl)
-            .then(res => res.json())
+            .then(res => {
+                console.log("Risposta fetch:", res);
+                return res.json();
+            })
             .then(data => {
-                setProducts(data)
-                setLoading(false)
+                console.log("Dati ricevuti:", data);
+                setProducts(data);
+                setLoading(false);
             })
             .catch(err => {
-                alert("Si è verificato un errore durante il caricamento dei dati")
-                setLoading(false)
-            })
-    }, [productsUrl])
+                console.error("Errore nella fetch:", err);
+                setLoading(false);
+            });
+    }, [])
 
     return (
         <DataContext.Provider
