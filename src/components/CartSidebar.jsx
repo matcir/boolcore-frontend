@@ -1,8 +1,23 @@
 import { useCart } from "../contexts/CartContext";
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 
 export default function CartSidebar() {
     const { items, total, clearCart, totalItems } = useCart();
+    const navigate = useNavigate();
+
+    const handleCheckout = () => {
+        // Chiudi l'offcanvas usando l'attributo data-bs-dismiss
+        const closeButton = document.querySelector('[data-bs-dismiss="offcanvas"]');
+        if (closeButton) {
+            closeButton.click();
+        }
+
+        // Piccolo delay per permettere all'offcanvas di chiudersi
+        setTimeout(() => {
+            navigate('/checkout');
+        }, 100);
+    };
 
     return (
         <div
@@ -16,7 +31,12 @@ export default function CartSidebar() {
                     🛒 Carrello
                     {totalItems > 0 && <span className="badge bg-primary ms-2">{totalItems}</span>}
                 </h5>
-                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                ></button>
             </div>
             <div className="offcanvas-body d-flex flex-column">
                 {items.length === 0 ? (
@@ -30,10 +50,16 @@ export default function CartSidebar() {
                         </ul>
                         <div className="mt-auto">
                             <h6 className="mb-3">Totale: € {total.toFixed(2)}</h6>
-                            <button className="btn btn-danger w-100 mb-2" onClick={clearCart}>
+                            <button
+                                className="btn btn-danger w-100 mb-2"
+                                onClick={clearCart}
+                            >
                                 Svuota Carrello
                             </button>
-                            <button className="btn btn-success w-100">
+                            <button
+                                className="btn btn-success w-100"
+                                onClick={handleCheckout}
+                            >
                                 Procedi al checkout
                             </button>
                         </div>
