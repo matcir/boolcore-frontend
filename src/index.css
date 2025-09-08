@@ -53,6 +53,7 @@
 .card-img-top {
   height: 250px;
   object-fit: contain;
+}
 
 .view-toggle {
   padding: 10px 0;
