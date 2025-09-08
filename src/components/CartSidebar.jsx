@@ -2,7 +2,7 @@ import { useCart } from "../contexts/CartContext";
 import CartItem from "./CartItem";
 
 export default function CartSidebar() {
-    const { items, total, clearCart } = useCart();
+    const { items, total, clearCart, totalItems } = useCart();
 
     return (
         <div
@@ -12,7 +12,10 @@ export default function CartSidebar() {
             aria-labelledby="cartSidebarLabel"
         >
             <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="cartSidebarLabel">🛒 Carrello</h5>
+                <h5 className="offcanvas-title" id="cartSidebarLabel">
+                    🛒 Carrello
+                    {totalItems > 0 && <span className="badge bg-primary ms-2">{totalItems}</span>}
+                </h5>
                 <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div className="offcanvas-body d-flex flex-column">
@@ -26,7 +29,7 @@ export default function CartSidebar() {
                             ))}
                         </ul>
                         <div className="mt-auto">
-                            <h6 className="mb-3">Totale: € {total}</h6>
+                            <h6 className="mb-3">Totale: € {total.toFixed(2)}</h6>
                             <button className="btn btn-danger w-100 mb-2" onClick={clearCart}>
                                 Svuota Carrello
                             </button>
