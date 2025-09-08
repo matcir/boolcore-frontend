@@ -6,6 +6,7 @@ import DefaultLayout from "./Layout/defaultLayout"
 import CartSidebar from "./components/CartSidebar"
 import { CartProvider } from "./contexts/CartContext"
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { DataProvider } from "./contexts/DataContext"
 import { LoaderProvider } from "./contexts/LoaderContext"
 

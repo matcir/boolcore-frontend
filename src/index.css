@@ -1,5 +1,6 @@
 @import "bootstrap";
 @import "bootstrap-icons";
+
 * {
   margin: 0;
   padding: 0;
@@ -15,12 +16,14 @@
   background-position: center;
   background-blend-mode: lighten;
   opacity: 0.9;
-  min-height: 100vh; /* prende almeno tutta l'altezza della finestra */
+  min-height: 100vh;
 }
+
 .bg-color-jumbo {
-  background-color: rgba(32, 48, 0, 0.9); /* più chiaro e trasparente */
+  background-color: rgba(32, 48, 0, 0.9);
   border: solid 1px rgb(97, 138, 97);
 }
+
 .acid-text {
   color: #9fef00;
 }
@@ -33,6 +36,7 @@
   background-color: rgba(17, 27, 47, 0.8);
   border: solid 1px rgb(97, 138, 97);
 }
+
 .card-jumbo p {
   font-size: 18px;
 }
@@ -40,11 +44,18 @@
 .jumbotron p {
   font-size: 20px;
 }
+
 .bg-color-footer {
   background-color: #212529;
 }
 
+ various-fix
 .card-img-top {
   height: 250px;
   object-fit: contain;
+
+.view-toggle {
+  padding: 10px 0;
+  margin-bottom: 20px;
+ main
 }
