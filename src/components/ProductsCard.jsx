@@ -20,9 +20,9 @@ export default function ProductsCard({ product }) {
                     <p className="card-text">
                         {product?.price ? `${Number(product.price).toFixed(2)}€` : ""}
                     </p>
-                    <p className="card-text">
+                    {/* <p className="card-text">
                         {product?.discount ? `Risparmi: ${Number(product.discount).toFixed(2)}€` : ""}
-                    </p>
+                    </p> */}
                     <p className="card-text">{product?.description}</p>
                     <p className="card-text">{product?.category_name}</p>
                 </div>
