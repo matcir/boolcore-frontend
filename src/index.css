@@ -49,7 +49,6 @@
   background-color: #212529;
 }
 
- various-fix
 .card-img-top {
   height: 250px;
   object-fit: contain;
@@ -58,5 +57,4 @@
 .view-toggle {
   padding: 10px 0;
   margin-bottom: 20px;
- main
 }
