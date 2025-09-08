@@ -4,8 +4,8 @@ import CarouselCard from "../components/CarouselCard"
 import { useCart } from "../contexts/CartContext"
 
 export default function SingleProduct() {
-    const { id } = useParams()
-    const url = `http://localhost:3000/api/products/${id}`
+    const { slug } = useParams()
+    const url = `http://localhost:3000/api/products/${slug}`
     const [singleProduct, setSingleProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -13,6 +13,7 @@ export default function SingleProduct() {
     const { addToCart } = useCart()
 
     useEffect(() => {
+
         const fetchProduct = async () => {
             try {
                 setLoading(true)

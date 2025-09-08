@@ -21,7 +21,7 @@ export default function App() {
               <Route element={<DefaultLayout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<ProductsList />} />
-                <Route path="/products/:id" element={<SingleProduct />} />
+                <Route path="/products/:slug" element={<SingleProduct />} />
               </Route>
             </Routes>
             <CartSidebar />

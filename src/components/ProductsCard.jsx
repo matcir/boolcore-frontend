@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import slugify from "slugify";
 
 export default function ProductsCard({ product, viewMode = 'grid' }) {
     return (
@@ -6,7 +7,7 @@ export default function ProductsCard({ product, viewMode = 'grid' }) {
             <div className={`card h-100 ${viewMode === 'list' ? 'card-list' : ''}`}>
                 <div className={viewMode === 'list' ? 'd-flex' : ''}>
                     <Link
-                        to={`/products/${product?.id}`}
+                        to={`/products/${slugify(product.product_name, { lower: true, strict: true })}`}
                         className={viewMode === 'list' ? 'flex-shrink-0' : ''}
                     >
                         <figure className={`ratio ${viewMode === 'list' ? 'ratio-1x1 list-image' : 'ratio-16x9'}`}>
