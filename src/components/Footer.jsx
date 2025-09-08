@@ -10,7 +10,7 @@ export default function Footer() {
 					height="60"
 					className="d-inline-block mb-2"
 				/>
-				<div className="d-flex d-flex justify-content-around align-items-center flex-wrap mt-3 ">
+				<div className="d-flex d-flex justify-content-between align-items-center flex-wrap mt-3 ">
 					<ul className="list-unstyled d-flex mb-0">
 						<li><a href="/products?category=pc" className="acid-text mx-2">PC Fissi</a></li>
 						<li><a href="/products?category=portatili" className="acid-text mx-2">Portatili</a></li>

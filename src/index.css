@@ -43,3 +43,8 @@
 .bg-color-footer {
   background-color: #212529;
 }
+
+.card-img-top {
+  height: 250px;
+  object-fit: contain;
+}
