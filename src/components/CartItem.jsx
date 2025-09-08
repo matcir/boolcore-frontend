@@ -1,20 +1,18 @@
 import { useCart } from "../contexts/CartContext";
 
 export default function CartItem({ item }) {
-    const { removeFromCart, addToCart } = useCart();
+    const { removeFromCart, incrementQuantity, decrementQuantity } = useCart();
 
-    const decreaseQuantity = () => {
-        if (item.quantity > 1) {
+    const handleDecreaseQuantity = () => {
+        if (item.quantity <= 1) {
             removeFromCart(item.id);
-            addToCart({ ...item, quantity: item.quantity - 1 });
         } else {
-            removeFromCart(item.id);
+            decrementQuantity(item.id);
         }
     };
 
-    const increaseQuantity = () => {
-        removeFromCart(item.id);
-        addToCart({ ...item, quantity: item.quantity + 1 });
+    const handleIncreaseQuantity = () => {
+        incrementQuantity(item.id);
     };
 
     return (
@@ -28,7 +26,7 @@ export default function CartItem({ item }) {
                     <button
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
-                        onClick={decreaseQuantity}
+                        onClick={handleDecreaseQuantity}
                     >
                         -
                     </button>
@@ -41,7 +39,7 @@ export default function CartItem({ item }) {
                     <button
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
-                        onClick={increaseQuantity}
+                        onClick={handleIncreaseQuantity}
                     >
                         +
                     </button>
