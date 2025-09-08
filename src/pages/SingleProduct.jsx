@@ -21,7 +21,7 @@ export default function SingleProduct() {
     const handleAddToCart = (product) => {
         addToCart({
             id: product.id,
-            name: product.product_name,
+            product_name: product.product_name,
             price: product.price,
             image: product.images?.[0]
         })
@@ -33,7 +33,6 @@ export default function SingleProduct() {
     return (
         <>
             <div className="container">
-                {/* Alert personalizzato */}
                 {showAlert && (
                     <div className="alert alert-success alert-dismissible fade show mt-3" role="alert">
                         <i className="bi bi-check-circle-fill me-2"></i>
@@ -41,14 +40,11 @@ export default function SingleProduct() {
                         <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
                     </div>
                 )}
-
-                {/* Prodotto */}
                 {singleProduct.map((product, index) => (
                     <CarouselCard key={index} product={product} />
                 ))}
 
-                {/* Pulsante a destra con margin-bottom */}
-                <div className="d-flex justify-content-end mt-3 mb-4"> {/* Aggiunto mb-4 */}
+                <div className="d-flex justify-content-end mt-3 mb-4">
                     {singleProduct.map((product) => (
                         <button
                             key={product.id}

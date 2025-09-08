@@ -1,17 +1,25 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 
 const CartContext = createContext();
 
-const initialState = {
-    items: []
+const getInitialState = () => {
+    if (typeof window !== "undefined") {
+        const cartData = localStorage.getItem("cart");
+        return cartData ? JSON.parse(cartData) : { items: [] };
+    }
+    return { items: [] };
 };
 
+const initialState = getInitialState();
+
 function cartReducer(state, action) {
+    let newState;
+
     switch (action.type) {
         case "ADD_TO_CART": {
             const existing = state.items.find(i => i.id === action.payload.id);
             if (existing) {
-                return {
+                newState = {
                     ...state,
                     items: state.items.map(i =>
                         i.id === action.payload.id
@@ -19,22 +27,31 @@ function cartReducer(state, action) {
                             : i
                     )
                 };
+            } else {
+                newState = {
+                    ...state,
+                    items: [...state.items, { ...action.payload, quantity: 1 }]
+                };
             }
-            return {
-                ...state,
-                items: [...state.items, { ...action.payload, quantity: 1 }]
-            };
+            break;
         }
         case "REMOVE_FROM_CART":
-            return {
+            newState = {
                 ...state,
                 items: state.items.filter(i => i.id !== action.payload)
             };
+            break;
         case "CLEAR_CART":
-            return initialState;
+            newState = { items: [] };
+            break;
         default:
-            return state;
+            newState = state;
     }
+    if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(newState));
+    }
+
+    return newState;
 }
 
 export function CartProvider({ children }) {
