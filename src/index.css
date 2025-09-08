@@ -54,7 +54,20 @@
   object-fit: contain;
 }
 
+.img-car {
+  height: 400px;
+  width: 100%;
+  object-fit: contain;
+}
+
 .view-toggle {
   padding: 10px 0;
   margin-bottom: 20px;
+}
+
+.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
 }
