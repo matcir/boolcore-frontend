@@ -17,7 +17,7 @@ export default function CarouselCard({ product }) {
         <div className="row w-100 mb-4">
             <div className="col-6 position-relative">
                 <img
-                    src={`http://localhost:3000/public/${product.images[currentIndex]}`}
+                    src={`http://localhost:3000/${product.images[currentIndex]}`}
                     alt={product.name}
                     className="img-fluid rounded" />
                 <button

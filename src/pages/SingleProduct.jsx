@@ -10,7 +10,7 @@ export default function SingleProduct() {
     const url = `http://localhost:3000/api/products/${id}`
     const [singleProduct, setSingleProduct] = useState([])
 
-    
+
 
 
     useEffect(() => {
@@ -28,8 +28,8 @@ export default function SingleProduct() {
             <div className="container">
                 <div className="row row-cols-1 row-cols-md-2 m-4">
                     {
-                        singleProduct.map((product) =>
-                            <CarouselCard key={product.id} product={product} />
+                        singleProduct.map((product, index) =>
+                            <CarouselCard key={index} product={product} />
                         )
                     }
                 </div>
