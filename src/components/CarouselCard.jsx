@@ -19,7 +19,7 @@ export default function CarouselCard({ product }) {
                 <img
                     src={`http://localhost:3000/${product.images[currentIndex]}`}
                     alt={product.name}
-                    className="img-car rounded" />
+                    className="img-car rounded m-3" />
                 <button
                     className="btn position-absolute top-50 start-0 translate-middle-y"
                     onClick={handlePrev}>
