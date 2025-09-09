@@ -12,9 +12,9 @@ export default function Footer() {
 				/>
 				<div className="d-flex d-flex justify-content-between align-items-center flex-wrap mt-3 ">
 					<ul className="list-unstyled d-flex mb-0">
-						<li><a href="/products?category=pc" className="acid-text mx-2">PC Fissi</a></li>
-						<li><a href="/products?category=portatili" className="acid-text mx-2">Portatili</a></li>
-						<li><a href="/products?category=accessori" className="acid-text mx-2">Accessori</a></li>
+						<li><a href="/categories/pc-fissi" className="acid-text mx-2">PC Fissi</a></li>
+						<li><a href="/categories/portatili" className="acid-text mx-2">Portatili</a></li>
+						<li><a href="/categories/accessori" className="acid-text mx-2">Accessori</a></li>
 					</ul>
 					<div>
 						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="mx-2 acid-text"><i className="bi bi-facebook m-1"></i>Facebook</a>
