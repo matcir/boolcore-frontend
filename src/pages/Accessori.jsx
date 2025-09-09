@@ -4,7 +4,8 @@ export default function Accessori() {
 		<>
 			<section>
 				<div className="container">
-					<Jumbotron title="Scegli il tuo Laptop" description="Acquista ora il tuo nuovo laptop e approfitta delle promozioni dedicate alla categoria portatili!" />
+					<Jumbotron title="Scegli i tuoi Accessori"
+						description="Completa il tuo setup con tastiere, mouse, cuffie e tanti altri accessori in offerta!" />
 				</div>
 			</section>
 		</>

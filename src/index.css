@@ -22,8 +22,9 @@
 .bg-img-fissi {
   padding-top: 10px;
   background-color: #0b121f;
-  background-image: url(../public/img/tech-fissi.jpg);
+  background-image: url("/img/tech-fissi.jpg");
 }
+
 .card-top-fissi {
   background-color: rgba(73, 87, 94, 0.5);
   border-radius: 10px;
