@@ -1,6 +1,7 @@
 import Jumbotron from "../components/Jumbotron";
 import JumboCategory from "../components/JumboCategory";
 import LatestArrivals from "../components/LatestArrivals";
+import BestSellers from "../components/BestSellers";
 
 export default function HomePage() {
     return (
@@ -36,9 +37,13 @@ export default function HomePage() {
                             />
                         </div>
                     </div>
-                    <section className="mt-3">
+                    <section className="mt-4">
                         <h1 className="acid-text text-uppercase text-center">ultimi arrivi</h1>
                         <LatestArrivals />
+                    </section>
+                    <section className="mt-4">
+                        <h1 className="acid-text text-uppercase text-center">più venduti</h1>
+                        <BestSellers />
                     </section>
                 </div>
             </div>
