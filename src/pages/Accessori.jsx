@@ -1,7 +1,12 @@
+import Jumbotron from "../components/Jumbotron"
 export default function Accessori() {
 	return (
 		<>
-			<h1>accessori</h1>
+			<section>
+				<div className="container">
+					<Jumbotron title="Scegli il tuo Laptop" description="Acquista ora il tuo nuovo laptop e approfitta delle promozioni dedicate alla categoria portatili!" />
+				</div>
+			</section>
 		</>
 	)
 }
