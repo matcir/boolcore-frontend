@@ -20,7 +20,8 @@ export default function ProductsList({ products }) {
                     <i className="bi bi-list"></i> Lista
                 </button>
             </div>
-            {viewMode === 'grid' ? (
+            
+            {viewMode === 'grid' ? ( //GRIGLIA
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
                     {products?.map((product, index) => (
                         <div key={product?.id ?? index} className="col">
@@ -32,13 +33,15 @@ export default function ProductsList({ products }) {
                     ))}
                 </div>
             ) : (
-                <div className="d-flex flex-column gap-3">
+                //LISTA
+                <div className="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-3">
                     {products?.map((product, index) => (
+                        <div key={product?.id ?? index} className='d-flex flex-column'>
                         <ProductsCard
-                            key={product?.id ?? index}
                             product={product}
                             viewMode={viewMode}
                         />
+                        </div>
                     ))}
                 </div>
             )}

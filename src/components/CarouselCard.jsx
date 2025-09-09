@@ -19,7 +19,7 @@ export default function CarouselCard({ product }) {
                 <img
                     src={`http://localhost:3000/${product.images[currentIndex]}`}
                     alt={product.name}
-                    className="img-fluid rounded" />
+                    className="img-car rounded m-3" />
                 <button
                     className="btn position-absolute top-50 start-0 translate-middle-y"
                     onClick={handlePrev}>
@@ -30,10 +30,28 @@ export default function CarouselCard({ product }) {
                     onClick={handleNext}>
                     ▶
                 </button>
+
+
+                <div className="d-flex justify-content-center gap-2">
+                    {product.images.map((img, index) => {
+                        return (
+                            <img
+                                key={index}
+                                src={`http://localhost:3000/${img}`}
+                                alt={`thumb-${index}`}
+                                onClick={() => setCurrentIndex(index)}
+                                className={`img-thumbnail thumb ${index === currentIndex ? "border border-primary" : ""
+                                    }`}
+                            />
+                        )
+                    })
+
+                    }
+                </div>
             </div>
 
             <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-                <h1>{product.name}</h1>
+                <h1>{product.product_name}</h1>
                 <p>{product.description}</p>
                 <p>{product.price} €</p>
             </div>
