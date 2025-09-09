@@ -6,8 +6,13 @@ export default function Products() {
 
     return (
         <>
-            <div className="container p-3">
-                <ProductsList products={products} />
+            <div className="container">
+
+
+                <div >
+                    <ProductsList products={products} />
+                </div>
+
             </div>
         </>
     )

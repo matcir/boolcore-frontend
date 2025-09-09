@@ -16,9 +16,14 @@ function CategoryPage() {
 
     return (
         <>
-            <div className="container p-3">
-                <ProductsList products={filteredProducts} />
+
+            <div className="container">
+                <div className="p-3">
+                    <ProductsList products={filteredProducts} />
+                </div>
             </div>
+
+
         </>
     );
 }
