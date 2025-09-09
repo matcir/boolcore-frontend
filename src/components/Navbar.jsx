@@ -24,6 +24,9 @@ export default function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link active" to="/">Home</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link active" to="/products">Tutti i prodotti</Link>
+                        </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" onClick={toggleDropdown}>
                                 Categorie
