@@ -51,7 +51,7 @@ export default function CarouselCard({ product }) {
             </div>
 
             <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-                <h1>{product.name}</h1>
+                <h1>{product.product_name}</h1>
                 <p>{product.description}</p>
                 <p>{product.price} €</p>
             </div>
