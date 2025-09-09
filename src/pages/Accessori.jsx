@@ -1,7 +1,13 @@
+import Jumbotron from "../components/Jumbotron"
 export default function Accessori() {
 	return (
 		<>
-			<h1>accessori</h1>
+			<section>
+				<div className="container">
+					<Jumbotron title="Scegli i tuoi Accessori"
+						description="Completa il tuo setup con tastiere, mouse, cuffie e tanti altri accessori in offerta!" />
+				</div>
+			</section>
 		</>
 	)
 }

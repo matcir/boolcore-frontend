@@ -29,9 +29,9 @@ export default function Navbar() {
                                 Categorie
                             </a>
                             <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                <li><Link className="dropdown-item" to="/products?category=pc-fissi">PC Fissi</Link></li>
-                                <li><Link className="dropdown-item" to="/products?category=portatili">Portatili</Link></li>
-                                <li><Link className="dropdown-item" to="/products?category=accessori">Accessori</Link></li>
+                                <li><Link className="dropdown-item" to="/fissi">PC Fissi</Link></li>
+                                <li><Link className="dropdown-item" to="/portatili">Portatili</Link></li>
+                                <li><Link className="dropdown-item" to="/accessori">Accessori</Link></li>
                             </ul>
                         </li>
                     </ul>
