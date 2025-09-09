@@ -15,7 +15,7 @@ export default function HomePage() {
                             <JumboCategory
                                 title="PC Fissi"
                                 description="Scopri la nostra selezione di computer desktop."
-                                link="/products?category=pc"
+                                link="/categories/pc-fissi"
                                 img_cover="./img/desktop.jpg"
                             />
                         </div>
@@ -23,7 +23,7 @@ export default function HomePage() {
                             <JumboCategory
                                 title="Portatili"
                                 description="Scopri la nostra selezione di computer Laptop."
-                                link="/products?category=portatili"
+                                link="/categories/portatili"
                                 img_cover="./img/notebook.jpg"
                             />
                         </div>
@@ -31,7 +31,7 @@ export default function HomePage() {
                             <JumboCategory
                                 title="Accessori"
                                 description="Tastiere, mouse, cuffie e molto altro per il tuo setup."
-                                link="/products?category=accessori"
+                                link="/categories/accessori"
                                 img_cover="./img/accessori.jpg"
                             />
                         </div>

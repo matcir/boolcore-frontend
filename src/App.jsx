@@ -9,12 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { DataProvider } from "./contexts/DataContext"
 import { LoaderProvider } from "./contexts/LoaderContext"
-
-import Fissi from "./pages/Fissi"
-import Laptop from "./pages/Laptop"
-import Accessori from "./pages/Accessori"
-
 import Checkout from "./components/Checkout"
+import CategoryPage from "./pages/CategoryPage"
 
 
 export default function App() {
@@ -28,14 +24,7 @@ export default function App() {
               <Route element={<DefaultLayout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<ProductsList />} />
-
-               
-                <Route path="/fissi" element={<Fissi />} />
-                <Route path="/portatili" element={<Laptop />} />
-                <Route path="/accessori" element={<Accessori />} />
-
-
-
+                <Route path="/categories/:slug" element={<CategoryPage />} />
                 <Route path="/products/:slug" element={<SingleProduct />} />
                 <Route path="/checkout" element={<Checkout />} />
 
