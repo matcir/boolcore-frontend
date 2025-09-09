@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import slugify from "slugify";
 
 export default function LatestArrivals() {
     const [product, setProduct] = useState([]);
@@ -25,19 +26,22 @@ export default function LatestArrivals() {
             {product.map((product) => (
                 <div key={product.id} className="col-md-4">
                     <div className="card-jumbo rounded-4">
-                        <Link to={`/products/${product.id}`}  className="text-decoration-none text-reset" >
-                        <img
-                            src={`http://localhost:3000/${product.images?.[0]}`}
-                            alt={product.name}
-                            className="card-img-top m-2"
-                        />
-                        <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                            <h3 className="acid-text">{product.product_name}</h3>
-                            <p className="gray-text">{product.description}</p>
-                            <span className="gray-text ">{product.price} €</span>
-                            <span className="btn btn-success m-2">Visualizza dettagli</span>
-                        </div>
-                        
+                        <Link to={`/products/${slugify(product.product_name, {
+                            lower: true,
+                            strict: true,
+                        })}`} className="text-decoration-none text-reset" >
+                            <img
+                                src={`http://localhost:3000/${product.images?.[0]}`}
+                                alt={product.name}
+                                className="card-img-top m-2"
+                            />
+                            <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                                <h3 className="acid-text">{product.product_name}</h3>
+                                <p className="gray-text">{product.description}</p>
+                                <span className="gray-text ">{product.price} €</span>
+                                <span className="btn btn-success m-2">Visualizza dettagli</span>
+                            </div>
+
                         </Link>
                     </div>
                 </div>
