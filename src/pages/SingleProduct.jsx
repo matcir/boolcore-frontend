@@ -31,12 +31,23 @@ export default function SingleProduct() {
         fetchProduct()
     }, [url])
 
+    const discount_price = (price, discount) => {
+
+        let p
+        if (discount > 0) {
+            p = price - (price * discount)
+            return p.toFixed(2)
+        }
+        return price.toFixed(2)
+    }
+
     const handleAddToCart = (product) => {
         addToCart({
-            id: product.product_name,
+            id: product.id,
             product_name: product.product_name,
-            price: product.price,
             image: product.images?.[0],
+            price: discount_price(product.price, product.discount),
+
         })
 
         setShowAlert(true)
@@ -91,7 +102,7 @@ export default function SingleProduct() {
 
     return (
         <>
-            <div className="container">
+            <div className="container pb-5">
                 {showAlert && (
                     <div
                         className="alert alert-success alert-dismissible fade show mt-3"
@@ -134,6 +145,18 @@ export default function SingleProduct() {
                         </div>
                     </div>
                 )}
+                <div className=" text-center mt-4 bg-light p-4 rounded">
+                    <h2>Dettagli del prodotto</h2>
+                    {singleProduct.details ? (
+                        <ul className="list-unstyled">
+                            {Object.entries(singleProduct.details).map(([key, value]) => (
+                                <li key={key}><strong className="px-1">{key.replaceAll('_', ' ').toUpperCase()}:</strong> {value}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>Nessun dettaglio disponibile.</p>
+                    )}
+                </div>
             </div>
         </>
     )
