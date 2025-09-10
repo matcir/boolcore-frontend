@@ -12,11 +12,9 @@ function DataProvider({ children }) {
         setLoading(true);
         fetch(productsUrl)
             .then(res => {
-                console.log("Risposta fetch:", res);
                 return res.json();
             })
             .then(data => {
-                console.log("Dati ricevuti:", data);
                 setProducts(data);
                 setLoading(false);
             })

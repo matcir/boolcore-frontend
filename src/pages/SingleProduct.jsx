@@ -2,31 +2,29 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import CarouselCard from "../components/CarouselCard"
 import { useCart } from "../contexts/CartContext"
+import { useData } from "../contexts/DataContext"
+import ProductsCard from "../components/ProductsCard"
+import RelatedProductCard from "../components/RelatedProductsCard"
 
 export default function SingleProduct() {
     const { slug } = useParams()
     const url = `http://localhost:3000/api/products/${slug}`
     const [singleProduct, setSingleProduct] = useState(null)
-    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [showAlert, setShowAlert] = useState(false)
+
     const { addToCart } = useCart()
+    const { products } = useData()
 
     useEffect(() => {
-
         const fetchProduct = async () => {
             try {
-                setLoading(true)
                 const response = await fetch(url)
-                if (!response.ok) {
-                    throw new Error('Prodotto non trovato')
-                }
+                if (!response.ok) throw new Error("Prodotto non trovato")
                 const data = await response.json()
                 setSingleProduct(data)
             } catch (err) {
                 setError(err.message)
-            } finally {
-                setLoading(false)
             }
         }
 
@@ -47,24 +45,13 @@ export default function SingleProduct() {
         addToCart({
             id: product.id,
             product_name: product.product_name,
+            image: product.images?.[0],
             price: discount_price(product.price, product.discount),
-            image: product.images?.[0]
+
         })
 
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 3000)
-    }
-
-    if (loading) {
-        return (
-            <div className="container">
-                <div className="d-flex justify-content-center mt-5">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Caricamento...</span>
-                    </div>
-                </div>
-            </div>
-        )
     }
 
     if (error) {
@@ -88,16 +75,50 @@ export default function SingleProduct() {
         )
     }
 
+    // ---- LOGICA PRODOTTI CORRELATI ----
+    let relatedProducts = []
+    if (products.length > 0 && singleProduct && singleProduct.category) {
+        const category = singleProduct.category.toLowerCase().trim()
+
+        if (category === "accessori") {
+            const firstWord = singleProduct.product_name
+                .split(" ")[0]
+                .toLowerCase()
+            relatedProducts = products.filter(
+                (p) =>
+                    p.id !== singleProduct.id &&
+                    p.product_name &&
+                    p.product_name.split(" ")[0].toLowerCase() === firstWord
+            )
+        } else {
+            relatedProducts = products.filter(
+                (p) =>
+                    p.id !== singleProduct.id &&
+                    p.category_name &&
+                    p.category_name.toLowerCase().trim() === category
+            )
+        }
+    }
+
     return (
         <>
             <div className="container pb-5">
                 {showAlert && (
-                    <div className="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <div
+                        className="alert alert-success alert-dismissible fade show mt-3"
+                        role="alert"
+                    >
                         <i className="bi bi-check-circle-fill me-2"></i>
                         Prodotto aggiunto al carrello!
-                        <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
+                        <button
+                            type="button"
+                            className="btn-close"
+                            onClick={() => setShowAlert(false)}
+                        ></button>
                     </div>
                 )}
+
+                {/* prodotto principale */}
                 <CarouselCard product={singleProduct} />
                 <div className="d-flex justify-content-end mt-3 mb-4">
                     <button
@@ -108,6 +129,22 @@ export default function SingleProduct() {
                         Aggiungi al carrello
                     </button>
                 </div>
+
+                {/* prodotti correlati */}
+                {relatedProducts.length > 0 && (
+                    <div className="mt-5">
+                        <h4>Prodotti correlati</h4>
+                        <div className="row">
+                            {relatedProducts.map((product) => (
+                                <RelatedProductCard
+                                    key={product.id}
+                                    product={product}
+                                    onAddToCart={handleAddToCart}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
                 <div className=" text-center mt-4 bg-light p-4 rounded">
                     <h2>Dettagli del prodotto</h2>
                     {singleProduct.details ? (
