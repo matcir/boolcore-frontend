@@ -57,7 +57,25 @@ export default function CarouselCard({ product }) {
                         <div className="card-body-fissi">
                             <h1>{product.product_name}</h1>
                             <p>{product.description}</p>
-                            <p>{product.price} €</p>
+                            <div className="">
+                                {product?.discount > 0 ?
+                                    <>
+                                        <span className="badge text-bg-success">
+                                            -{parseFloat(product?.discount * 100).toFixed(0)}%
+                                        </span>
+                                        <p className="card-text text-decoration-line-through">
+                                            {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                                        </p>
+                                        <p className="card-text text-danger fs-5">
+                                            {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
+                                        </p>
+                                    </>
+                                    :
+                                    <p className="card-text">
+                                        {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                                    </p>
+                                }
+                            </div>
                         </div>
                     </div>
 
