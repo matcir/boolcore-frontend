@@ -9,7 +9,7 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
       <div className={
         viewMode === "grid"
           ? "card h-100"
-          : "card flex-row w-100 align-items-center"
+          : "card flex-row w-50 align-items-center mx-auto "
       }
       >
         <Link
