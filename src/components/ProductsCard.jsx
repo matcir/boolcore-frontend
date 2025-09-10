@@ -29,19 +29,34 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
   return (
     <div className="container">
       {showAlert && (
-        <div className={`alert alert-${alertType} alert-dismissible fade show position-fixed`}
-          style={{ top: '80px', right: '20px', zIndex: 9999 }}>
-          <i className={`bi ${alertType === 'success' ? 'bi-check-circle-fill' : alertType === 'warning' ? 'bi-exclamation-triangle-fill' : 'bi-x-circle-fill'} me-2`}></i>
+        <div
+          className={`alert alert-${alertType} alert-dismissible fade show position-fixed`}
+          style={{ top: "80px", right: "20px", zIndex: 9999 }}
+        >
+          <i
+            className={`bi ${alertType === "success"
+                ? "bi-check-circle-fill"
+                : alertType === "warning"
+                  ? "bi-exclamation-triangle-fill"
+                  : "bi-x-circle-fill"
+              } me-2`}
+          ></i>
           {alertMessage}
-          <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setShowAlert(false)}
+          ></button>
         </div>
       )}
 
-      <div className={
-        viewMode === "grid"
-          ? "card h-100"
-          : "card flex-row w-50 align-items-center mx-auto "
-      }>
+      <div
+        className={
+          viewMode === "grid"
+            ? "card h-100"
+            : "card flex-row w-50 align-items-center mx-auto"
+        }
+      >
         <Link
           to={`/products/${slugify(product.product_name, {
             lower: true,
@@ -69,19 +84,51 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
 
         <div className="card-body text-center">
           <h4 className="card-title">{product?.product_name}</h4>
-          <p className="card-text">
-            {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
-          </p>
+          <div>
+            {product?.discount > 0 ? (
+              <>
+                <span className="badge text-bg-success">
+                  -{parseFloat(product?.discount * 100).toFixed(0)}%
+                </span>
+                <p className="card-text text-decoration-line-through">
+                  {product?.price
+                    ? `${parseFloat(product.price).toFixed(2)}€`
+                    : ""}
+                </p>
+                <p className="card-text text-danger fs-5">
+                  {product?.price
+                    ? `${parseFloat(
+                      product.price - product.price * product.discount
+                    ).toFixed(2)}€`
+                    : ""}
+                </p>
+              </>
+            ) : (
+              <p className="card-text">
+                {product?.price
+                  ? `${parseFloat(product.price).toFixed(2)}€`
+                  : ""}
+              </p>
+            )}
+          </div>
           <p className="card-text">{product?.description}</p>
           <p className="card-text">{product?.category_name}</p>
 
+          {/* Pulsante confronto */}
           <button
-            className={`btn btn-sm ${isInCompare(product.id) ? 'btn-warning' : 'btn-outline-primary'} mt-2`}
+            className={`btn btn-sm ${isInCompare(product.id)
+                ? "btn-warning"
+                : "btn-outline-primary"
+              } mt-2`}
             onClick={handleCompareToggle}
-            disabled={false}
           >
-            <i className={`bi ${isInCompare(product.id) ? 'bi-dash-circle' : 'bi-bar-chart'} me-1`}></i>
-            {isInCompare(product.id) ? 'Rimuovi confronto' : 'Confronta'}
+            <i
+              className={`bi ${isInCompare(product.id) ? "bi-dash-circle" : "bi-bar-chart"
+                } me-1`}
+            ></i>
+            {isInCompare(product.id)
+              ? "Rimuovi confronto"
+              : "Confronta"}
           </button>
         </div>
       </div>
