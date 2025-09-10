@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import ProductsList from "./pages/ProductsListPage"
 import SingleProduct from "./pages/SingleProduct"
+import ComparePage from "./pages/ComparePage"
 import DefaultLayout from "./Layout/defaultLayout"
 import CartSidebar from "./components/CartSidebar"
 import { CartProvider } from "./contexts/CartContext"
@@ -11,6 +12,7 @@ import { DataProvider } from "./contexts/DataContext"
 import { LoaderProvider } from "./contexts/LoaderContext"
 import Checkout from "./components/Checkout"
 import CategoryPage from "./pages/CategoryPage"
+import { CompareProvider } from "./contexts/CompareContext"
 
 
 export default function App() {
@@ -19,19 +21,21 @@ export default function App() {
     <LoaderProvider>
       <DataProvider>
         <CartProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<DefaultLayout />}>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/products" element={<ProductsList />} />
-                <Route path="/categories/:slug" element={<CategoryPage />} />
-                <Route path="/products/:slug" element={<SingleProduct />} />
-                <Route path="/checkout" element={<Checkout />} />
-
-              </Route>
-            </Routes>
-            <CartSidebar />
-          </BrowserRouter>
+          <CompareProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route element={<DefaultLayout />}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/products" element={<ProductsList />} />
+                  <Route path="/categories/:slug" element={<CategoryPage />} />
+                  <Route path="/products/:slug" element={<SingleProduct />} />
+                  <Route path="/confronta" element={<ComparePage />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                </Route>
+              </Routes>
+              <CartSidebar />
+            </BrowserRouter>
+          </CompareProvider>
         </CartProvider>
       </DataProvider>
     </LoaderProvider>
