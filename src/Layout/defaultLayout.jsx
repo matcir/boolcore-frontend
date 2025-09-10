@@ -11,6 +11,7 @@ export default function DefaultLayout() {
 			<main className="bg-color-boolcore">
 				<Outlet />
 
+
 			</main>
 			<Footer />
 		</>
