@@ -45,7 +45,7 @@ export default function SingleProduct() {
 
     const handleAddToCart = (product) => {
         addToCart({
-            id: product.product_name,
+            id: product.id,
             product_name: product.product_name,
             price: discount_price(product.price, product.discount),
             image: product.images?.[0]
