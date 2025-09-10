@@ -33,11 +33,21 @@ export default function SingleProduct() {
         fetchProduct()
     }, [url])
 
+    const discount_price = (price, discount) => {
+
+        let p
+        if (discount > 0) {
+            p = price - (price * discount)
+            return parseInt(p).toFixed(2)
+        }
+        return parseInt(price).toFixed(2)
+    }
+
     const handleAddToCart = (product) => {
         addToCart({
             id: product.product_name,
             product_name: product.product_name,
-            price: product.price,
+            price: discount_price(product.price, product.discount),
             image: product.images?.[0]
         })
 
