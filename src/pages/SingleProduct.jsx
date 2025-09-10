@@ -38,9 +38,9 @@ export default function SingleProduct() {
         let p
         if (discount > 0) {
             p = price - (price * discount)
-            return parseInt(p).toFixed(2)
+            return p.toFixed(2)
         }
-        return parseInt(price).toFixed(2)
+        return price.toFixed(2)
     }
 
     const handleAddToCart = (product) => {
