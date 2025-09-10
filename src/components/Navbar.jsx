@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from "../contexts/CartContext";
+import CompareIndicator from "../components/CompareIndicator";
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +15,13 @@ export default function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
-                    <img src="/logo.png" alt="BoolCore Logo" width="80" height="60" className="d-inline-block align-top" />
+                    <img
+                        src="/logo.png"
+                        alt="BoolCore Logo"
+                        width="80"
+                        height="60"
+                        className="d-inline-block align-top"
+                    />
                 </Link>
                 <button className="navbar-toggler" type="button" onClick={toggleMenu}>
                     <span className="navbar-toggler-icon"></span>
@@ -28,7 +35,12 @@ export default function Navbar() {
                             <Link className="nav-link active" to="/products">Tutti i prodotti</Link>
                         </li>
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" onClick={toggleDropdown}>
+                            <a
+                                className="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                onClick={toggleDropdown}
+                            >
                                 Categorie
                             </a>
                             <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
@@ -38,9 +50,11 @@ export default function Navbar() {
                             </ul>
                         </li>
                     </ul>
+
                     <div className="d-flex align-items-center">
+                        <CompareIndicator />
                         <button
-                            className="btn btn-outline-light position-relative"
+                            className="btn btn-outline-light position-relative ms-2"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#cartSidebar"

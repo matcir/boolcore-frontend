@@ -1,0 +1,236 @@
+import { useEffect, useState } from "react";
+import { useCompare } from "../contexts/CompareContext";
+import { Link } from "react-router-dom";
+
+export default function ComparePage() {
+    const { compareItems, removeFromCompare, clearCompare } = useCompare();
+    const [detailedProducts, setDetailedProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchDetailedProducts = async () => {
+            if (compareItems.length === 0) {
+                setDetailedProducts([]);
+                setLoading(false);
+                return;
+            }
+
+            try {
+                setLoading(true);
+                const promises = compareItems.map(product =>
+                    fetch(`http://localhost:3000/api/products/${product.slug}`)
+                        .then(res => res.json())
+                );
+
+                const results = await Promise.all(promises);
+                setDetailedProducts(results);
+            } catch (error) {
+                console.error('Errore nel caricamento dei dettagli:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDetailedProducts();
+    }, [compareItems]);
+
+    if (loading) {
+        return (
+            <div className="container">
+                <div className="d-flex justify-content-center mt-5">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Caricamento...</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (compareItems.length === 0) {
+        return (
+            <div className="container mt-4">
+                <div className="text-center">
+                    <i className="bi bi-bar-chart display-1 text-muted"></i>
+                    <h2 className="mt-3">Nessun prodotto da confrontare</h2>
+                    <p className="text-muted">Aggiungi alcuni prodotti per iniziare il confronto</p>
+                    <Link to="/" className="btn btn-primary">
+                        <i className="bi bi-arrow-left me-2"></i>
+                        Torna ai prodotti
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    const getFieldValue = (product, field) => {
+        if (product.details && product.details[field]) {
+            return product.details[field];
+        }
+        if (product[field]) {
+            return product[field];
+        }
+        return '-';
+    };
+
+    const formatFieldName = (fieldName) => {
+        const fieldMap = {
+            product_name: 'Nome Prodotto',
+            price: 'Prezzo',
+            description: 'Descrizione',
+            category: 'Categoria',
+            ram: 'RAM',
+            processor: 'Processore',
+            storage: 'Storage',
+            graphic_card: 'Scheda Grafica',
+            os: 'Sistema Operativo',
+            psu: 'Alimentatore',
+            case: 'Case',
+            motherboard: 'Scheda Madre',
+            inches: 'Dimensioni (pollici)',
+            color: 'Colore',
+            dpi: 'DPI',
+            audio_type: 'Tipo Audio',
+            impedance: 'Impedenza',
+            connectivity: 'Connettività',
+            keyboard_layout: 'Layout Tastiera',
+            keyboard_type: 'Tipo Tastiera',
+            frequency: 'Frequenza'
+        };
+        return fieldMap[fieldName] || fieldName;
+    };
+
+    const getAllFields = () => {
+        const fields = new Set();
+        detailedProducts.forEach(product => {
+            // Campi base
+            ['product_name', 'price', 'description', 'category'].forEach(field => fields.add(field));
+
+            // Campi dettagli
+            if (product.details) {
+                Object.keys(product.details).forEach(key => fields.add(key));
+            }
+        });
+        return Array.from(fields);
+    };
+
+    const allFields = getAllFields();
+
+    return (
+        <div className="container mt-4">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1>
+                        <i className="bi bi-bar-chart me-2"></i>
+                        Confronto Prodotti
+                    </h1>
+                    <p className="text-muted">
+                        Confrontando {compareItems.length} prodott{compareItems.length > 1 ? 'i' : 'o'}
+                    </p>
+                </div>
+                <div>
+                    <button
+                        className="btn btn-outline-danger me-2"
+                        onClick={clearCompare}
+                    >
+                        <i className="bi bi-trash me-1"></i>
+                        Pulisci tutto
+                    </button>
+                    <Link to="/" className="btn btn-outline-primary">
+                        <i className="bi bi-plus me-1"></i>
+                        Aggiungi prodotti
+                    </Link>
+                </div>
+            </div>
+
+            {/* Tabella Desktop */}
+            <div className="d-none d-md-block">
+                <div className="table-responsive">
+                    <table className="table table-bordered table-hover">
+                        <thead className="table-dark">
+                            <tr>
+                                <th scope="col" style={{ width: '200px' }}>Caratteristiche</th>
+                                {detailedProducts.map((product, index) => (
+                                    <th key={index} scope="col" className="text-center">
+                                        <div className="position-relative">
+                                            <img
+                                                src={`http://localhost:3000/${product.images?.[0]}`}
+                                                alt={product.product_name}
+                                                className="img-fluid rounded mb-2"
+                                                style={{ height: '80px', width: '80px', objectFit: 'cover' }}
+                                            />
+                                            <button
+                                                className="btn btn-sm btn-outline-light position-absolute top-0 end-0"
+                                                onClick={() => removeFromCompare(compareItems[index].id)}
+                                                title="Rimuovi dal confronto"
+                                            >
+                                                <i className="bi bi-x"></i>
+                                            </button>
+                                        </div>
+                                        <h6 className="mb-0">{product.product_name}</h6>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {allFields.map((field, fieldIndex) => (
+                                <tr key={fieldIndex}>
+                                    <td className="fw-bold bg-light">{formatFieldName(field)}</td>
+                                    {detailedProducts.map((product, productIndex) => (
+                                        <td key={productIndex} className="text-center">
+                                            {field === 'price' && getFieldValue(product, field) !== '-'
+                                                ? `€${parseFloat(getFieldValue(product, field)).toFixed(2)}`
+                                                : getFieldValue(product, field)
+                                            }
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Cards Mobile */}
+            <div className="d-md-none">
+                <div className="row">
+                    {detailedProducts.map((product, index) => (
+                        <div key={index} className="col-12 mb-4">
+                            <div className="card">
+                                <div className="card-header d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                        <img
+                                            src={`http://localhost:3000/${product.images?.[0]}`}
+                                            alt={product.product_name}
+                                            className="img-fluid rounded me-3"
+                                            style={{ height: '50px', width: '50px', objectFit: 'cover' }}
+                                        />
+                                        <h6 className="mb-0">{product.product_name}</h6>
+                                    </div>
+                                    <button
+                                        className="btn btn-sm btn-outline-danger"
+                                        onClick={() => removeFromCompare(compareItems[index].id)}
+                                    >
+                                        <i className="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                                <div className="card-body">
+                                    {allFields.map((field, fieldIndex) => (
+                                        <div key={fieldIndex} className="row mb-2">
+                                            <div className="col-5 fw-bold">{formatFieldName(field)}:</div>
+                                            <div className="col-7">
+                                                {field === 'price' && getFieldValue(product, field) !== '-'
+                                                    ? `€${parseFloat(getFieldValue(product, field)).toFixed(2)}`
+                                                    : getFieldValue(product, field)
+                                                }
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
