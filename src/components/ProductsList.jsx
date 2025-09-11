@@ -62,7 +62,7 @@ export default function ProductsList({ products }) {
 
                     {visibleCount < products?.length && (
                         <div className="d-flex justify-content-center mt-4">
-                            <button className="btn btn-primary" onClick={handleLoadMore}>
+                            <button className="btn btn-primary m-3" onClick={handleLoadMore}>
                                 Carica altri
                             </button>
                         </div>
