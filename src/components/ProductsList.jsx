@@ -2,10 +2,18 @@ import { useState } from 'react';
 import ProductsCard from './ProductsCard';
 import Jumbotron from './Jumbotron';
 
+const PAGE_SIZE = 20;
+
 export default function ProductsList({ products }) {
     const [viewMode, setViewMode] = useState('grid');
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-    console.log(products)
+    const handleLoadMore = () => {
+        setVisibleCount((prev) => prev + PAGE_SIZE);
+    };
+
+    const visibleProducts = products?.slice(0, visibleCount);
+
     return (
         <>
             <section >
@@ -29,7 +37,7 @@ export default function ProductsList({ products }) {
 
                     {viewMode === 'grid' ? ( //GRIGLIA
                         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-                            {products?.map((product, index) => (
+                            {visibleProducts?.map((product, index) => (
                                 <div key={product?.id ?? index} className="col">
                                     <ProductsCard
                                         product={product}
@@ -41,7 +49,7 @@ export default function ProductsList({ products }) {
                     ) : (
                         //LISTA
                         <div className="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-3">
-                            {products?.map((product, index) => (
+                            {visibleProducts?.map((product, index) => (
                                 <div key={product?.id ?? index} className='d-flex flex-column'>
                                     <ProductsCard
                                         product={product}
@@ -49,6 +57,14 @@ export default function ProductsList({ products }) {
                                     />
                                 </div>
                             ))}
+                        </div>
+                    )}
+
+                    {visibleCount < products?.length && (
+                        <div className="d-flex justify-content-center mt-4">
+                            <button className="btn btn-primary" onClick={handleLoadMore}>
+                                Carica altri
+                            </button>
                         </div>
                     )}
                 </div>

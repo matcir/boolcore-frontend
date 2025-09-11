@@ -89,7 +89,7 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
             }
           </div>
           <p className="card-text">{product?.description}</p>
-          <p className="card-text">{product?.category_name}</p>
+          
 
           <button
             className={`btn btn-sm ${isInCompare(product.id) ? 'btn-warning' : 'btn-outline-primary'} mt-2`}
