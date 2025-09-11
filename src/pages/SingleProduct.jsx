@@ -153,21 +153,6 @@ export default function SingleProduct() {
                     </div>
                 </div>
 
-                {/* prodotti correlati */}
-                {relatedProducts.length > 0 && (
-                    <div className="mt-5">
-                        <h4>Prodotti correlati</h4>
-                        <div className="row">
-                            {relatedProducts.map((product) => (
-                                <RelatedProductCard
-                                    key={product.id}
-                                    product={product}
-                                    onAddToCart={handleAddToCart}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
                 <div className=" text-center mt-4 bg-light p-4 rounded">
                     <h2>Dettagli del prodotto</h2>
                     {singleProduct.details ? (
@@ -180,6 +165,23 @@ export default function SingleProduct() {
                         <p>Nessun dettaglio disponibile.</p>
                     )}
                 </div>
+
+
+                {/* prodotti correlati */}
+                {relatedProducts.length > 0 && (
+                    <div className="mt-5">
+                        <h4 className="text-light">Prodotti correlati</h4>
+                        <div className="row">
+                            {relatedProducts.map((product) => (
+                                <RelatedProductCard
+                                    key={product.id}
+                                    product={product}
+                                    onAddToCart={handleAddToCart}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     )
