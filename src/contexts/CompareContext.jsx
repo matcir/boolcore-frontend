@@ -2,21 +2,34 @@ import { createContext, useState, useContext } from "react";
 
 const CompareContext = createContext();
 
+const toSlug = (name) => {
+    return name
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+};
+
 function CompareProvider({ children }) {
     const [compareItems, setCompareItems] = useState([]);
 
     const addToCompare = (product) => {
-        // Controlla se il prodotto è già nella lista
         if (compareItems.find(item => item.id === product.id)) {
             return { success: false, message: "Prodotto già in confronto" };
         }
 
-        // Limite massimo di 3 prodotti
         if (compareItems.length >= 3) {
             return { success: false, message: "Puoi confrontare massimo 3 prodotti" };
         }
 
-        setCompareItems(prev => [...prev, product]);
+        const productWithSlug = {
+            ...product,
+            slug: product.slug || toSlug(product.product_name || product.name || '')
+        };
+
+        setCompareItems(prev => [...prev, productWithSlug]);
         return { success: true, message: "Prodotto aggiunto al confronto" };
     };
 
