@@ -30,9 +30,18 @@ function cartReducer(state, action) {
                 newState = { ...state, items: updatedItems };
             } else {
                 // Se l'item non esiste, aggiungilo con quantità 1
+                // Assicurati che tutti i campi necessari siano presenti
+                const newItem = {
+                    ...action.payload,
+                    quantity: 1,
+                    // Assicurati che original_price e discount esistano
+                    original_price: action.payload.original_price || action.payload.price,
+                    discount: action.payload.discount || 0
+                };
+
                 newState = {
                     ...state,
-                    items: [...state.items, { ...action.payload, quantity: 1 }]
+                    items: [...state.items, newItem]
                 };
             }
             break;
@@ -88,6 +97,7 @@ export function CartProvider({ children }) {
     const [state, dispatch] = useReducer(cartReducer, initialState);
 
     const addToCart = (product) => {
+        console.log('Adding to cart:', product); // Debug
         dispatch({ type: "ADD_TO_CART", payload: product });
     };
 
@@ -108,12 +118,24 @@ export function CartProvider({ children }) {
     };
 
     const total = state.items.reduce(
-        (sum, item) => sum + (item.price * item.quantity),
+        (sum, item) => sum + (parseFloat(item.price) * item.quantity),
         0
     );
 
     const totalItems = state.items.reduce(
         (sum, item) => sum + item.quantity,
+        0
+    );
+
+    // Calcola il totale risparmiato
+    const totalSaved = state.items.reduce(
+        (sum, item) => {
+            if (item.discount && item.discount > 0) {
+                const savings = (parseFloat(item.original_price) - parseFloat(item.price)) * item.quantity;
+                return sum + savings;
+            }
+            return sum;
+        },
         0
     );
 
@@ -125,7 +147,8 @@ export function CartProvider({ children }) {
         decrementQuantity,
         clearCart,
         total,
-        totalItems
+        totalItems,
+        totalSaved
     };
 
     return (
