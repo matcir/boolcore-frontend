@@ -26,15 +26,15 @@ export default function CartItem({ item }) {
                     {hasDiscount ? (
                         <small>
                             <span className="text-decoration-line-through text-muted me-2">
-                                €{item.original_price.toFixed(2)}
+                                €{parseFloat(item.original_price || item.price).toFixed(2)}
                             </span>
                             <span className="text-danger fw-bold">
-                                €{item.price.toFixed(2)}
+                                €{parseFloat(item.price).toFixed(2)}
                             </span>
                             <span className="text-muted"> x {item.quantity}</span>
                         </small>
                     ) : (
-                        <small>€{item.price.toFixed(2)} x {item.quantity}</small>
+                        <small>€{parseFloat(item.price).toFixed(2)} x {item.quantity}</small>
                     )}
                 </div>
             </div>
