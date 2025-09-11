@@ -1,22 +1,31 @@
 import { useCart } from "../contexts/CartContext";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function CartSidebar() {
     const { items, total, clearCart, totalItems, totalSaved } = useCart();
     const navigate = useNavigate();
+    const [showClearConfirm, setShowClearConfirm] = useState(false);
 
     const handleCheckout = () => {
-        // Chiudi l'offcanvas usando l'attributo data-bs-dismiss
         const closeButton = document.querySelector('[data-bs-dismiss="offcanvas"]');
         if (closeButton) {
             closeButton.click();
         }
 
-        // Piccolo delay per permettere all'offcanvas di chiudersi
         setTimeout(() => {
             navigate('/checkout');
         }, 100);
+    };
+
+    const confirmClearCart = () => {
+        clearCart();
+        setShowClearConfirm(false);
+    };
+
+    const cancelClearCart = () => {
+        setShowClearConfirm(false);
     };
 
     return (
@@ -53,7 +62,7 @@ export default function CartSidebar() {
 
                             <button
                                 className="btn btn-danger w-100 mb-2"
-                                onClick={clearCart}
+                                onClick={() => setShowClearConfirm(true)}
                             >
                                 Svuota Carrello
                             </button>
@@ -67,6 +76,42 @@ export default function CartSidebar() {
                     </>
                 )}
             </div>
+
+            {/* Modal di conferma per svuotare carrello */}
+            <div className={`modal fade ${showClearConfirm ? 'show' : ''}`}
+                style={{ display: showClearConfirm ? 'block' : 'none' }}
+                tabIndex="-1"
+                aria-hidden={!showClearConfirm}>
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Conferma svuotamento</h5>
+                            <button type="button" className="btn-close" onClick={cancelClearCart}></button>
+                        </div>
+                        <div className="modal-body">
+                            Sei sicuro di voler svuotare completamente il carrello?
+                            {items.length > 0 && (
+                                <p className="text-muted mt-2">
+                                    Verranno rimossi {items.length} prodotto{items.length !== 1 ? 'i' : ''}.
+                                </p>
+                            )}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={cancelClearCart}>
+                                Annulla
+                            </button>
+                            <button type="button" className="btn btn-danger" onClick={confirmClearCart}>
+                                Svuota Carrello
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Backdrop quando il modal è aperto */}
+            {showClearConfirm && (
+                <div className="modal-backdrop fade show" onClick={cancelClearCart}></div>
+            )}
         </div>
     );
 }
