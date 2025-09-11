@@ -69,9 +69,25 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
 
         <div className="card-body text-center">
           <h4 className="card-title">{product?.product_name}</h4>
-          <p className="card-text">
-            {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
-          </p>
+          <div className="">
+            {product?.discount > 0 ?
+              <>
+                <span className="badge text-bg-success">
+                  -{parseFloat(product?.discount * 100).toFixed(0)}%
+                </span>
+                <p className="card-text text-decoration-line-through">
+                  {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                </p>
+                <p className="card-text text-danger fs-5">
+                  {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
+                </p>
+              </>
+              :
+              <p className="card-text">
+                {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+              </p>
+            }
+          </div>
           <p className="card-text">{product?.description}</p>
           <p className="card-text">{product?.category_name}</p>
 
