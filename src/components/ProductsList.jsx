@@ -14,13 +14,13 @@ export default function ProductsList({ products }) {
                 <div className="container">
                     <div className="d-flex justify-content-end gap-2 mb-4 view-toggle">
                         <button
-                            className={`btn ${viewMode === 'grid' ? 'btn-dark' : 'btn-outline-dark'}`}
+                            className={`btn ${viewMode === 'grid' ? 'btn-light' : 'btn-outline-light'}`}
                             onClick={() => setViewMode('grid')}
                         >
                             <i className="bi bi-grid-3x3-gap"></i> Griglia
                         </button>
                         <button
-                            className={`btn ${viewMode === 'list' ? 'btn-dark' : 'btn-outline-dark'}`}
+                            className={`btn ${viewMode === 'list' ? 'btn-light' : 'btn-outline-light'}`}
                             onClick={() => setViewMode('list')}
                         >
                             <i className="bi bi-list"></i> Lista

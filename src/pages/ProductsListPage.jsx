@@ -70,7 +70,7 @@ export default function ProductsListPage() {
                             checked={showPromo}
                             onChange={() => setShowPromo(p => !p)}
                         />
-                        <label className="form-check-label" htmlFor="promoCheck">
+                        <label className="form-check-label text-light" htmlFor="promoCheck">
                             In promozione
                         </label>
                     </div>
@@ -84,7 +84,7 @@ export default function ProductsListPage() {
                             checked={showRecent}
                             onChange={() => setShowRecent(r => !r)}
                         />
-                        <label className="form-check-label" htmlFor="recentCheck">
+                        <label className="form-check-label text-light" htmlFor="recentCheck">
                             Più recenti
                         </label>
                     </div>
