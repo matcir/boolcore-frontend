@@ -32,22 +32,33 @@ export default function SingleProduct() {
     }, [url])
 
     const discount_price = (price, discount) => {
+        // Assicurati che discount sia un numero valido
+        const discountValue = discount && !isNaN(discount) ? parseFloat(discount) : 0
 
-        let p
-        if (discount > 0) {
-            p = price - (price * discount)
-            return p.toFixed(2)
+        if (discountValue > 0) {
+            const discountedPrice = price - (price * discountValue)
+            return discountedPrice.toFixed(2)
         }
         return price.toFixed(2)
     }
 
     const handleAddToCart = (product) => {
+        // Debug: verifica i valori
+        console.log('Product:', product)
+        console.log('Price:', product.price)
+        console.log('Discount:', product.discount)
+
+        const originalPrice = parseFloat(product.price)
+        const discountValue = product.discount && !isNaN(product.discount) ? parseFloat(product.discount) : 0
+        const finalPrice = parseFloat(discount_price(originalPrice, discountValue))
+
         addToCart({
             id: product.id,
             product_name: product.product_name,
             image: product.images?.[0],
-            price: discount_price(product.price, product.discount),
-
+            price: finalPrice,
+            original_price: originalPrice, // Aggiungi il prezzo originale
+            discount: discountValue,       // Aggiungi lo sconto
         })
 
         setShowAlert(true)
@@ -105,8 +116,16 @@ export default function SingleProduct() {
             <div className="container pb-5">
                 {showAlert && (
                     <div
-                        className="alert alert-success alert-dismissible fade show mt-3"
+                        className="alert alert-success alert-dismissible fade show position-fixed"
                         role="alert"
+                        style={{
+                            top: '80px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            zIndex: 1050,
+                            minWidth: '300px',
+                            maxWidth: '500px'
+                        }}
                     >
                         <i className="bi bi-check-circle-fill me-2"></i>
                         Prodotto aggiunto al carrello!
@@ -119,19 +138,36 @@ export default function SingleProduct() {
                 )}
 
                 {/* prodotto principale */}
-                <div className="card">
-                    <CarouselCard product={singleProduct} />
-                </div>
-                <div className="d-flex justify-content-end mt-3 mb-4">
-                    <button
-                        className="btn btn-dark"
-                        onClick={() => handleAddToCart(singleProduct)}
-                    >
-                        <i className="bi bi-cart-plus me-2"></i>
-                        Aggiungi al carrello
-                    </button>
+                <div className="card mt-4">
+                    <div className="card-body">
+                        <CarouselCard product={singleProduct} />
+                        <div className="d-flex justify-content-end mt-3 mb-4">
+                            <button
+                                className="btn btn-dark"
+                                onClick={() => handleAddToCart(singleProduct)}
+                            >
+                                <i className="bi bi-cart-plus me-2"></i>
+                                Aggiungi al carrello
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
+                {/* prodotti correlati */}
+                {relatedProducts.length > 0 && (
+                    <div className="mt-5">
+                        <h4>Prodotti correlati</h4>
+                        <div className="row">
+                            {relatedProducts.map((product) => (
+                                <RelatedProductCard
+                                    key={product.id}
+                                    product={product}
+                                    onAddToCart={handleAddToCart}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
                 <div className=" text-center mt-4 bg-light p-4 rounded">
                     <h2>Dettagli del prodotto</h2>
                     {singleProduct.details ? (
@@ -144,23 +180,6 @@ export default function SingleProduct() {
                         <p>Nessun dettaglio disponibile.</p>
                     )}
                 </div>
-
-                {/* prodotti correlati */}
-                {relatedProducts.length > 0 && (
-                    <div className="mt-5">
-                        <h4 className="text-light">Prodotti correlati</h4>
-                        <div className="row">
-                            {relatedProducts.map((product) => (
-                                <RelatedProductCard
-                                    key={product.id}
-                                    product={product}
-                                    onAddToCart={handleAddToCart}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
-
             </div>
         </>
     )

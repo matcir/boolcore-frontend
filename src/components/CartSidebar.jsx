@@ -3,7 +3,7 @@ import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 
 export default function CartSidebar() {
-    const { items, total, clearCart, totalItems } = useCart();
+    const { items, total, clearCart, totalItems, totalSaved } = useCart();
     const navigate = useNavigate();
 
     const handleCheckout = () => {
@@ -49,7 +49,8 @@ export default function CartSidebar() {
                             ))}
                         </ul>
                         <div className="mt-auto">
-                            <h6 className="mb-3">Totale: € {total.toFixed(2)}</h6>
+                            <h6 className="mb-3">Totale: €{total.toFixed(2)}</h6>
+
                             <button
                                 className="btn btn-danger w-100 mb-2"
                                 onClick={clearCart}
