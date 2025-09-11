@@ -13,6 +13,7 @@ import { LoaderProvider } from "./contexts/LoaderContext"
 import Checkout from "./components/Checkout"
 import CategoryPage from "./pages/CategoryPage"
 import { CompareProvider } from "./contexts/CompareContext"
+import NotFoundPage from "./pages/NotFoundPage"
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
                   <Route path="/products/:slug" element={<SingleProduct />} />
                   <Route path="/confronta" element={<ComparePage />} />
                   <Route path="/checkout" element={<Checkout />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Route>
               </Routes>
               <CartSidebar />
