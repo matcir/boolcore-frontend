@@ -2,10 +2,21 @@ import { useEffect, useState } from "react";
 import { useCompare } from "../contexts/CompareContext";
 import { Link } from "react-router-dom";
 
+const toSlug = (name) => {
+    return name
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+};
+
 export default function ComparePage() {
     const { compareItems, removeFromCompare, clearCompare } = useCompare();
     const [detailedProducts, setDetailedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchDetailedProducts = async () => {
@@ -17,22 +28,43 @@ export default function ComparePage() {
 
             try {
                 setLoading(true);
-                const promises = compareItems.map(product =>
-                    fetch(`http://localhost:3000/api/products/${product.slug}`)
-                        .then(res => res.json())
-                );
+                setError(null);
+
+                const promises = compareItems.map(product => {
+                    const slug = product.slug || toSlug(product.product_name || product.name || '');
+                    return fetch(`http://localhost:3000/api/products/${slug}`)
+                        .then(res => {
+                            if (!res.ok) {
+                                throw new Error(`Errore ${res.status}: ${res.statusText}`);
+                            }
+                            return res.json();
+                        })
+                        .catch(error => {
+                            console.error('Errore nel caricamento del prodotto:', error);
+                            return { error: true, message: error.message, product };
+                        });
+                });
 
                 const results = await Promise.all(promises);
-                setDetailedProducts(results);
+                const successfulResults = results.filter(result => !result.error);
+                setDetailedProducts(successfulResults);
+                const failedResults = results.filter(result => result.error);
+                if (failedResults.length > 0) {
+                    failedResults.forEach(failed => {
+                        removeFromCompare(failed.product.id);
+                    });
+                }
+
             } catch (error) {
                 console.error('Errore nel caricamento dei dettagli:', error);
+                setError('Errore nel caricamento dei prodotti');
             } finally {
                 setLoading(false);
             }
         };
 
         fetchDetailedProducts();
-    }, [compareItems]);
+    }, [compareItems, removeFromCompare]);
 
     if (loading) {
         return (
@@ -41,6 +73,17 @@ export default function ComparePage() {
                     <div className="spinner-border" role="status">
                         <span className="visually-hidden">Caricamento...</span>
                     </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-danger">
+                    <i className="bi bi-exclamation-triangle me-2"></i>
+                    {error}
                 </div>
             </div>
         );
@@ -102,10 +145,7 @@ export default function ComparePage() {
     const getAllFields = () => {
         const fields = new Set();
         detailedProducts.forEach(product => {
-            // Campi base
             ['product_name', 'price', 'description', 'category'].forEach(field => fields.add(field));
-
-            // Campi dettagli
             if (product.details) {
                 Object.keys(product.details).forEach(key => fields.add(key));
             }
@@ -124,7 +164,7 @@ export default function ComparePage() {
                         Confronto Prodotti
                     </h1>
                     <p className="text-muted">
-                        Confrontando {compareItems.length} prodott{compareItems.length > 1 ? 'i' : 'o'}
+                        Confrontando {detailedProducts.length} prodott{detailedProducts.length > 1 ? 'i' : 'o'}
                     </p>
                 </div>
                 <div>
@@ -141,8 +181,6 @@ export default function ComparePage() {
                     </Link>
                 </div>
             </div>
-
-            {/* Tabella Desktop */}
             <div className="d-none d-md-block">
                 <div className="table-responsive">
                     <table className="table table-bordered table-hover">
@@ -157,10 +195,13 @@ export default function ComparePage() {
                                                 alt={product.product_name}
                                                 className="img-fluid rounded mb-2"
                                                 style={{ height: '80px', width: '80px', objectFit: 'cover' }}
+                                                onError={(e) => {
+                                                    e.target.src = 'https://via.placeholder.com/80x80?text=No+Image';
+                                                }}
                                             />
                                             <button
                                                 className="btn btn-sm btn-outline-light position-absolute top-0 end-0"
-                                                onClick={() => removeFromCompare(compareItems[index].id)}
+                                                onClick={() => removeFromCompare(product.id)}
                                                 title="Rimuovi dal confronto"
                                             >
                                                 <i className="bi bi-x"></i>
@@ -189,8 +230,6 @@ export default function ComparePage() {
                     </table>
                 </div>
             </div>
-
-            {/* Cards Mobile */}
             <div className="d-md-none">
                 <div className="row">
                     {detailedProducts.map((product, index) => (
@@ -203,12 +242,15 @@ export default function ComparePage() {
                                             alt={product.product_name}
                                             className="img-fluid rounded me-3"
                                             style={{ height: '50px', width: '50px', objectFit: 'cover' }}
+                                            onError={(e) => {
+                                                e.target.src = 'https://via.placeholder.com/50x50?text=No+Image';
+                                            }}
                                         />
                                         <h6 className="mb-0">{product.product_name}</h6>
                                     </div>
                                     <button
                                         className="btn btn-sm btn-outline-danger"
-                                        onClick={() => removeFromCompare(compareItems[index].id)}
+                                        onClick={() => removeFromCompare(product.id)}
                                     >
                                         <i className="bi bi-trash"></i>
                                     </button>
