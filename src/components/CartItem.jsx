@@ -1,7 +1,10 @@
 import { useCart } from "../contexts/CartContext";
+import slugify from "slugify";
+import { useNavigate } from "react-router-dom";
 
 export default function CartItem({ item }) {
     const { removeFromCart, incrementQuantity, decrementQuantity } = useCart();
+    const navigate = useNavigate()
 
     const handleDecreaseQuantity = () => {
         if (item.quantity <= 1) {
@@ -15,9 +18,27 @@ export default function CartItem({ item }) {
         incrementQuantity(item.id);
     };
 
+    const handleNavigate = () => {
+        const closeButton = document.querySelector('[data-bs-dismiss="offcanvas"]');
+        if (closeButton) closeButton.click();
+
+        setTimeout(() => {
+            navigate(
+                `/products/${slugify(item.product_name, {
+                    lower: true,
+                    strict: true,
+                })}`
+            );
+        }, 100);
+    };
+
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
-            <div className="flex-grow-1">
+            <div
+                className="flex-grow-1"
+                style={{ cursor: "pointer" }}
+                onClick={handleNavigate}
+            >
                 <h6 className="mb-1">{item.product_name}</h6>
                 <small>€ {item.price} x {item.quantity}</small>
             </div>
