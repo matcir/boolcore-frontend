@@ -7,7 +7,10 @@ export default function HomePage() {
     return (
         <>
 
-            <div className="container">
+            <div className="container text-center">
+                <div>
+                    <span className='acid-text border border-danger p-2 rounded-2 text-uppercase'>💣Spedizione gratuita per ordini superiori a 99.99€💣</span>
+                </div>
                 <div className="row">
                     <div className="col-12 text-center">
                         <Jumbotron title="Benvenuto su BoolCore!" description="Scopri i nostri prodotti e le offerte speciali." />

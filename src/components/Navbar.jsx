@@ -12,7 +12,7 @@ export default function Navbar() {
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0 z-3">
             <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img
@@ -28,9 +28,6 @@ export default function Navbar() {
                 </button>
                 <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link className="nav-link active" to="/">Home</Link>
-                        </li>
                         <li className="nav-item">
                             <Link className="nav-link active" to="/products">Tutti i prodotti</Link>
                         </li>
