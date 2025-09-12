@@ -157,15 +157,12 @@ export default function ComparePage() {
 
     return (
         <div className="container pt-5">
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="d-flex justify-content-between align-items-center text-light mb-4">
                 <div>
                     <h1>
                         <i className="bi bi-bar-chart me-2"></i>
                         Confronto Prodotti
                     </h1>
-                    <p className="text-muted">
-                        Confrontando {detailedProducts.length} prodott{detailedProducts.length > 1 ? 'i' : 'o'}
-                    </p>
                 </div>
                 <div>
                     <button
@@ -175,7 +172,7 @@ export default function ComparePage() {
                         <i className="bi bi-trash me-1"></i>
                         Pulisci tutto
                     </button>
-                    <Link to="/" className="btn btn-outline-primary">
+                    <Link to="/products" className="btn btn-outline-primary">
                         <i className="bi bi-plus me-1"></i>
                         Aggiungi prodotti
                     </Link>
