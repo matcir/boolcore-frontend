@@ -1,7 +1,13 @@
+import { Link } from "react-router-dom";
+import slugify from "slugify";
+
 export default function RelatedProductsCard({ product, onAddToCart }) {
     return (
         <div className="col-6 col-md-3 mb-4">
-            <div className="card h-100 text-center">
+            <Link to={`/products/${slugify(product.product_name, {
+                lower: true,
+                strict: true,
+            })}`} className="card h-100 text-center text-decoration-none">
                 <img
                     src={`http://localhost:3000/${product.images?.[0]}`}
                     className="card-img-top p-3"
@@ -38,7 +44,7 @@ export default function RelatedProductsCard({ product, onAddToCart }) {
                         Aggiungi
                     </button>
                 </div>
-            </div>
+            </Link>
         </div>
     )
 }

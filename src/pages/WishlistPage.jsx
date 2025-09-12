@@ -62,7 +62,7 @@ export default function WishlistPage() {
     if (items.length === 0) {
         return (
             <div className="container py-5">
-                <div className="text-center">
+                <div className="text-center pt-4">
                     <i className="fas fa-heart text-muted" style={{ fontSize: '4rem' }}></i>
                     <h2 className="mt-3 text-light">La tua wishlist è vuota</h2>
                     <p className="text-muted">Aggiungi i tuoi prodotti preferiti alla wishlist per trovarli facilmente!</p>

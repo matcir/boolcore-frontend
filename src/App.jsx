@@ -19,6 +19,7 @@ import { CompareProvider } from "./contexts/CompareContext"
 import NotFoundPage from "./pages/NotFoundPage"
 
 import Presentaction from "./Layout/Presentaction"
+import ThanksPage from "./pages/ThanksPage"
 
 
 
@@ -53,6 +54,7 @@ export default function App() {
                     <Route path="/confronta" element={<ComparePage />} />
                     <Route path="/wishlist" element={<WishlistPage />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/thankspage" element={<ThanksPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                   </Route>
                 </Routes>

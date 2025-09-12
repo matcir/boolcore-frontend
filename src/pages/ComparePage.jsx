@@ -69,7 +69,7 @@ export default function ComparePage() {
     if (loading) {
         return (
             <div className="container">
-                <div className="d-flex justify-content-center mt-5">
+                <div className="d-flex justify-content-center ">
                     <div className="spinner-border" role="status">
                         <span className="visually-hidden">Caricamento...</span>
                     </div>
@@ -80,7 +80,7 @@ export default function ComparePage() {
 
     if (error) {
         return (
-            <div className="container mt-4">
+            <div className="container ">
                 <div className="alert alert-danger">
                     <i className="bi bi-exclamation-triangle me-2"></i>
                     {error}
@@ -91,8 +91,8 @@ export default function ComparePage() {
 
     if (compareItems.length === 0) {
         return (
-            <div className="container mt-4">
-                <div className="text-center">
+            <div className="container ">
+                <div className="text-center pt-5">
                     <i className="bi bi-bar-chart display-1 text-muted"></i>
                     <h2 className="mt-3">Nessun prodotto da confrontare</h2>
                     <p className="text-muted">Aggiungi alcuni prodotti per iniziare il confronto</p>
@@ -156,7 +156,7 @@ export default function ComparePage() {
     const allFields = getAllFields();
 
     return (
-        <div className="container mt-4">
+        <div className="container pt-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h1>
