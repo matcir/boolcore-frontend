@@ -12,7 +12,7 @@ export default function Navbar() {
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0 z-3">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
             <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img
@@ -23,13 +23,25 @@ export default function Navbar() {
                         className="d-inline-block align-top"
                     />
                 </Link>
-                <button className="navbar-toggler" type="button" onClick={toggleMenu}>
+
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    onClick={toggleMenu}
+                    aria-controls="navbarNav"
+                    aria-expanded={isMenuOpen}
+                    aria-label="Toggle navigation"
+                >
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
+
+                <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="/products">Tutti i prodotti</Link>
+                            <Link className="nav-link" to="/products">
+                                <i className="fas fa-boxes me-1"></i>
+                                Tutti i prodotti
+                            </Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a
@@ -37,31 +49,49 @@ export default function Navbar() {
                                 href="#"
                                 role="button"
                                 onClick={toggleDropdown}
+                                aria-expanded={isDropdownOpen}
                             >
+                                <i className="fas fa-list me-1"></i>
                                 Categorie
                             </a>
-                            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                <li><Link className="dropdown-item" to="/categories/pc-fissi">PC Fissi</Link></li>
-                                <li><Link className="dropdown-item" to="/categories/portatili">Portatili</Link></li>
-                                <li><Link className="dropdown-item" to="/categories/accessori">Accessori</Link></li>
+                            <ul className={`dropdown-menu dropdown-menu-dark ${isDropdownOpen ? 'show' : ''}`}>
+                                <li>
+                                    <Link className="dropdown-item" to="/categories/pc-fissi">
+                                        <i className="fas fa-desktop me-2"></i>
+                                        PC Fissi
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" to="/categories/portatili">
+                                        <i className="fas fa-laptop me-2"></i>
+                                        Portatili
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" to="/categories/accessori">
+                                        <i className="fas fa-keyboard me-2"></i>
+                                        Accessori
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                     </ul>
 
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center gap-2">
                         <CompareIndicator />
                         <button
-                            className="btn btn-outline-light position-relative ms-2"
+                            className="btn btn-outline-light position-relative"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#cartSidebar"
                             aria-controls="cartSidebar"
                         >
                             <i className="fas fa-shopping-cart"></i>
-                            <span className="ms-2">Carrello</span>
+                            <span className="d-none d-sm-inline ms-2">Carrello</span>
                             {totalItems > 0 && (
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {totalItems}
+                                    <span className="visually-hidden">prodotti nel carrello</span>
                                 </span>
                             )}
                         </button>
