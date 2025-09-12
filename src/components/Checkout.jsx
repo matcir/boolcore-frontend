@@ -117,6 +117,23 @@ export default function Checkout() {
                             <h5 className="mb-0">Riepilogo Ordine</h5>
                         </div>
                         <div className="card-body">
+                            {items.map(item => (
+                                <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <small className="d-block">{item.product_name}</small>
+                                        <small className="text-muted">Qty: {item.quantity}</small>
+                                    </div>
+                                    <small>€ {(item.price * item.quantity).toFixed(2)}</small>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="card mt-3">
+                        <div className="card-header">
+                            <h6 className="mb-0">Prodotti nel carrello</h6>
+                        </div>
+                        <div className="card-body">
                             <div className="d-flex justify-content-between mb-2">
                                 <span>Prodotti ({totalItems})</span>
                                 <span>€ {total.toFixed(2)}</span>
@@ -146,23 +163,7 @@ export default function Checkout() {
                                 <span>€ {finalTotal.toFixed(2)}</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="card mt-3">
-                        <div className="card-header">
-                            <h6 className="mb-0">Prodotti nel carrello</h6>
-                        </div>
-                        <div className="card-body">
-                            {items.map(item => (
-                                <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
-                                    <div>
-                                        <small className="d-block">{item.product_name}</small>
-                                        <small className="text-muted">Qty: {item.quantity}</small>
-                                    </div>
-                                    <small>€ {(item.price * item.quantity).toFixed(2)}</small>
-                                </div>
-                            ))}
-                        </div>
+                        
                     </div>
                 </div>
                 <div className="col-lg-8 order-lg-1">
