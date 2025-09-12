@@ -110,14 +110,6 @@ export default function ProductsListPage() {
                         : `${products.length} prodotti trovati`}
                 </span>
             </div>
-            {loading && (
-                <div className="d-flex justify-content-center my-5">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Caricamento...</span>
-
-                    </div>
-                )
-            }
             {
                 error && (
                     <div className="alert alert-danger" role="alert">
