@@ -57,90 +57,203 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
       {showAlert && (
         <div className={`alert alert-${alertType} alert-dismissible fade show position-fixed`}
           style={{ top: '80px', right: '20px', zIndex: 9999 }}>
-          <i className={`fas ${alertType === 'success' ? 'fa-check-circle' : alertType === 'warning' ? 'fa-exclamation-triangle' : 'fa-times-circle'} me-2`}></i>
+          <i className={`bi ${alertType === 'success' ? 'bi-check-circle-fill' : alertType === 'warning' ? 'bi-exclamation-triangle-fill' : 'bi-x-circle-fill'} me-2`}></i>
           {alertMessage}
           <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
         </div>
       )}
+      {viewMode === 'grid' ? (// GRIGLIA 
 
-      <div className={
-        viewMode === "grid"
-          ? "card h-100"
-          : "card flex-row w-50 align-items-center mx-auto"
-      }>
-        <Link
-          to={`/products/${slugify(product.product_name, {
-            lower: true,
-            strict: true,
-          })}`}
-          className={viewMode === "grid" ? "" : "d-flex"}
-        >
-          <div className="card-img position-relative">
-            <img
-              src={`http://localhost:3000/${product.images?.[0]}`}
-              alt={product.product_name}
-              className={
-                viewMode === "grid" ? "product-img-fixed px-2" : "img-list"
-              }
-            />
-            <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1">
-              {isInCompare(product.id) && (
-                <span className="badge bg-primary">
-                  <i className="bi bi-bar-chart-fill"></i>
-                </span>
-              )}
-              {isInWishlist(product.id) && (
-                <span className="badge bg-danger">
-                  <i className="fas fa-heart"></i>
-                </span>
-              )}
+        <div className="card h-100">
+          <Link
+            to={`/products/${slugify(product.product_name, {
+              lower: true,
+              strict: true,
+            })}`}
+            className="d-flex"
+          >
+            <div className="card-img position-relative">
+              <img
+                src={`http://localhost:3000/${product.images?.[0]}`}
+                alt={product.product_name}
+                className={
+                  viewMode === "grid" ? "product-img-fixed px-2" : "img-list"
+                }
+              />
+              <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1">
+                {isInCompare(product.id) && (
+                  <span className="badge bg-primary">
+                    <i className="bi bi-bar-chart-fill"></i>
+                  </span>
+                )}
+                {isInWishlist(product.id) && (
+                  <span className="badge bg-danger">
+                    <i className="fas fa-heart"></i>
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <div className="card-body text-center">
-          <h4 className="card-title">{product?.product_name}</h4>
-          <div className="">
-            {product?.discount > 0 ?
-              <>
-                <span className="badge text-bg-success">
-                  -{parseFloat(product?.discount * 100).toFixed(0)}%
-                </span>
-                <p className="card-text text-decoration-line-through">
+          <div className="card-body text-center">
+            <h4 className="card-title">{product?.product_name}</h4>
+            <div className="">
+              {product?.discount > 0 ?
+                <>
+                  <span className="badge text-bg-success">
+                    -{parseFloat(product?.discount * 100).toFixed(0)}%
+                  </span>
+                  <p className="card-text text-decoration-line-through">
+                    {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                  </p>
+                  <p className="card-text text-danger fs-5">
+                    {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
+                  </p>
+                </>
+                :
+                <p className="card-text">
                   {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
                 </p>
-                <p className="card-text text-danger fs-5">
-                  {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
-                </p>
-              </>
-              :
-              <p className="card-text">
-                {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
-              </p>
-            }
-          </div>
-          <p className="card-text">{product?.description}</p>
+              }
+            </div>
+            <p className="card-text">{product?.description}</p>
 
-          <div className="d-flex gap-2 justify-content-center flex-wrap">
-            <button
-              className={`btn btn-sm ${isInWishlist(product.id) ? 'btn-danger' : 'btn-outline-danger'}`}
-              onClick={handleWishlistToggle}
-              title={isInWishlist(product.id) ? 'Rimuovi dalla wishlist' : 'Aggiungi alla wishlist'}
-            >
-              <i className={`fas fa-heart me-1`}></i>
-              {isInWishlist(product.id) ? 'Rimuovi' : 'Wishlist'}
-            </button>
+            <div className="d-flex gap-2 justify-content-center flex-wrap mt-2">
+              <button
+                className={`btn btn-sm ${isInWishlist(product.id) ? 'btn-danger' : 'btn-outline-danger'}`}
+                onClick={handleWishlistToggle}
+                title={isInWishlist(product.id) ? 'Rimuovi dalla wishlist' : 'Aggiungi alla wishlist'}
+              >
+                <i className={`fas fa-heart me-1`}></i>
+                {isInWishlist(product.id) ? 'Rimuovi' : 'Wishlist'}
+              </button>
 
-            <button
-              className={`btn btn-sm ${isInCompare(product.id) ? 'btn-warning' : 'btn-outline-primary'}`}
-              onClick={handleCompareToggle}
-            >
-              <i className={`bi ${isInCompare(product.id) ? 'bi-dash-circle' : 'bi-bar-chart'} me-1`}></i>
-              {isInCompare(product.id) ? 'Rimuovi confronto' : 'Confronta'}
-            </button>
+              <button
+                className={`btn btn-sm ${isInCompare(product.id) ? 'btn-warning' : 'btn-outline-primary'}`}
+                onClick={handleCompareToggle}
+              >
+                <i className={`bi ${isInCompare(product.id) ? 'bi-dash-circle' : 'bi-bar-chart'} me-1`}></i>
+                {isInCompare(product.id) ? 'Rimuovi confronto' : 'Confronta'}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+
+
+      ) : (//LISTA
+        <div className="card">
+          <h2 className="card-title py-3 text-center">{product?.product_name}</h2>
+          <div className="row">
+            {/* IMMAGINE */}
+            <div className="col-12 col-md-3 d-flex pb-3">
+              <Link
+                to={`/products/${slugify(product.product_name, {
+                  lower: true,
+                  strict: true,
+                })}`}
+                className="flex-start"
+              >
+                <div className="card-img position-relative ps-5">
+                  <img
+                    src={`http://localhost:3000/${product.images?.[0]}`}
+                    alt={product.product_name}
+                    className={
+                      viewMode === "grid" ? "product-img-fixed px-2" : "img-list img-fluid"
+                    }
+                  />
+                  <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1">
+                    {isInCompare(product.id) && (
+                      <span className="badge bg-primary">
+                        <i className="bi bi-bar-chart-fill"></i>
+                      </span>
+                    )}
+                    {isInWishlist(product.id) && (
+                      <span className="badge bg-danger">
+                        <i className="fas fa-heart"></i>
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+            {/* DESCRIZIONE, PREZZO E PULSANTI */}
+            <div className="col-12 col-md-5 d-flex align-items-center justify-content-center">
+              <div className="d-flex flex-column align-items ps-2 gap-3">
+                {/* PREZZO */}
+                <div className="">
+                  {product?.discount > 0 ? (
+                    <>
+                      <div className="d-flex flex-row justify-content-around align-items-center">
+                        <div>
+                          <span className="badge text-bg-success">
+                            -{parseFloat(product?.discount * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                        <div>
+                          <p className="card-text text-decoration-line-through">
+                            {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                          </p>
+                        </div>
+                        <p className="card-text text-danger fs-5">
+                          {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="card-text">
+                      {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                    </p>
+                  )}
+                </div>
+
+                {/* SPEDIZIONE */}
+                <p className="small x-2">Spedizione Gratuita con un ordine di 100,00 €</p>
+
+                {/* BOTTONI */}
+                <div className="d-flex gap-2 justify-content-center mt-2">
+                  <button
+                    className={`btn btn-sm ${isInWishlist(product.id) ? 'btn-danger' : 'btn-outline-danger'}`}
+                    onClick={handleWishlistToggle}
+                    title={isInWishlist(product.id) ? 'Rimuovi dalla wishlist' : 'Aggiungi alla wishlist'}
+                  >
+                    <i className={`fas fa-heart me-1`}></i>
+                    {isInWishlist(product.id) ? 'Rimuovi' : 'Wishlist'}
+                  </button>
+
+                  <button
+                    className={`btn btn-sm ${isInCompare(product.id) ? 'btn-warning' : 'btn-outline-primary'}`}
+                    onClick={handleCompareToggle}
+                  >
+                    <i className={`bi ${isInCompare(product.id) ? 'bi-dash-circle' : 'bi-bar-chart'} me-1`}></i>
+                    {isInCompare(product.id) ? 'Rimuovi confronto' : 'Confronta'}
+                  </button>
+                  <Link
+                    to={`/products/${slugify(product.product_name, {
+                      lower: true,
+                      strict: true,
+                    })}`}
+                    className="btn btn-sm btn-warning"
+                  >
+                    View Product
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* DETTAGLI */}
+            <div className="col-12 col-md-4 d-flex justify-content-center">
+              <ul className="list-unstyled d-flex flex-column justify-content-center">
+                {Object.entries(product.details).map(([key, value]) => (
+                  <li key={key}>
+                    <strong className="px-1">{key.replaceAll('_', ' ').toUpperCase()}:</strong> {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
