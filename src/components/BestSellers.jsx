@@ -33,7 +33,7 @@ export default function BestSellers() {
                             <img
                                 src={`http://localhost:3000/${product.images?.[0]}`}
                                 alt={product.name}
-                                className="card-img-top m-2"
+                                className="card-img-top"
                             />
                             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                                 <h3 className="acid-text">{product.product_name}</h3>
