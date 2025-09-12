@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import CarouselCard from "../components/CarouselCard"
 import { useCart } from "../contexts/CartContext"
+import { useWishlist } from "../contexts/WishlistContext"
 import { useData } from "../contexts/DataContext"
 import ProductsCard from "../components/ProductsCard"
 import RelatedProductCard from "../components/RelatedProductsCard"
@@ -12,8 +13,11 @@ export default function SingleProduct() {
     const [singleProduct, setSingleProduct] = useState(null)
     const [error, setError] = useState(null)
     const [showAlert, setShowAlert] = useState(false)
+    const [alertMessage, setAlertMessage] = useState("")
+    const [alertType, setAlertType] = useState("success")
 
     const { addToCart } = useCart()
+    const { toggleWishlist, isInWishlist } = useWishlist()
     const { products } = useData()
 
     useEffect(() => {
@@ -31,8 +35,14 @@ export default function SingleProduct() {
         fetchProduct()
     }, [url])
 
+    const showAlertMessage = (message, type = "success") => {
+        setAlertMessage(message)
+        setAlertType(type)
+        setShowAlert(true)
+        setTimeout(() => setShowAlert(false), 3000)
+    }
+
     const discount_price = (price, discount) => {
-        // Assicurati che discount sia un numero valido
         const discountValue = discount && !isNaN(discount) ? parseFloat(discount) : 0
 
         if (discountValue > 0) {
@@ -43,11 +53,6 @@ export default function SingleProduct() {
     }
 
     const handleAddToCart = (product) => {
-        // Debug: verifica i valori
-        console.log('Product:', product)
-        console.log('Price:', product.price)
-        console.log('Discount:', product.discount)
-
         const originalPrice = parseFloat(product.price)
         const discountValue = product.discount && !isNaN(product.discount) ? parseFloat(product.discount) : 0
         const finalPrice = parseFloat(discount_price(originalPrice, discountValue))
@@ -57,12 +62,33 @@ export default function SingleProduct() {
             product_name: product.product_name,
             image: product.images?.[0],
             price: finalPrice,
-            original_price: originalPrice, // Aggiungi il prezzo originale
-            discount: discountValue,       // Aggiungi lo sconto
+            original_price: originalPrice,
+            discount: discountValue,
         })
 
-        setShowAlert(true)
-        setTimeout(() => setShowAlert(false), 3000)
+        showAlertMessage("Prodotto aggiunto al carrello!")
+    }
+
+    const handleWishlistToggle = () => {
+        if (!singleProduct) return
+
+        const wasInWishlist = isInWishlist(singleProduct.id)
+
+        toggleWishlist({
+            id: singleProduct.id,
+            product_name: singleProduct.product_name,
+            price: singleProduct.price,
+            discount: singleProduct.discount,
+            description: singleProduct.description,
+            images: singleProduct.images,
+            image: singleProduct.images?.[0]
+        })
+
+        if (wasInWishlist) {
+            showAlertMessage("Prodotto rimosso dalla wishlist", "warning")
+        } else {
+            showAlertMessage("Prodotto aggiunto alla wishlist", "success")
+        }
     }
 
     if (error) {
@@ -116,7 +142,7 @@ export default function SingleProduct() {
             <div className="container pb-5 pt-5">
                 {showAlert && (
                     <div
-                        className="alert alert-success alert-dismissible fade show position-fixed"
+                        className={`alert alert-${alertType} alert-dismissible fade show position-fixed`}
                         role="alert"
                         style={{
                             top: '80px',
@@ -127,8 +153,8 @@ export default function SingleProduct() {
                             maxWidth: '500px'
                         }}
                     >
-                        <i className="bi bi-check-circle-fill me-2"></i>
-                        Prodotto aggiunto al carrello!
+                        <i className={`fas ${alertType === 'success' ? 'fa-check-circle' : alertType === 'warning' ? 'fa-exclamation-triangle' : 'fa-times-circle'} me-2`}></i>
+                        {alertMessage}
                         <button
                             type="button"
                             className="btn-close"
@@ -141,7 +167,14 @@ export default function SingleProduct() {
                 <div className="card ">
                     <div className="card-body ">
                         <CarouselCard product={singleProduct} />
-                        <div className="d-flex justify-content-end mt-3 mb-4">
+                        <div className="d-flex justify-content-end gap-2 mt-3 mb-4 flex-wrap">
+                            <button
+                                className={`btn ${isInWishlist(singleProduct.id) ? 'btn-danger' : 'btn-outline-danger'}`}
+                                onClick={handleWishlistToggle}
+                            >
+                                <i className="fas fa-heart me-2"></i>
+                                {isInWishlist(singleProduct.id) ? 'Rimuovi dalla wishlist' : 'Aggiungi alla wishlist'}
+                            </button>
                             <button
                                 className="btn btn-dark"
                                 onClick={() => handleAddToCart(singleProduct)}
