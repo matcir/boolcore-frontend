@@ -80,7 +80,7 @@ export default function WishlistPage() {
             {showAlert && (
                 <div
                     className={`alert alert-${alertType} alert-dismissible fade show position-fixed`}
-                    style={{ top: '80px', right: '20px', zIndex: 9999 }}
+                    style={{ top: '80px', right: '20px', zIndex: 1000 }}
                 >
                     <i className={`fas ${alertType === 'success' ? 'fa-check-circle' : alertType === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} me-2`}></i>
                     {alertMessage}
