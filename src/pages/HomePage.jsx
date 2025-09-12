@@ -2,19 +2,22 @@ import Jumbotron from "../components/Jumbotron";
 import JumboCategory from "../components/JumboCategory";
 import LatestArrivals from "../components/LatestArrivals";
 import BestSellers from "../components/BestSellers";
+import Smoke from "../Layout/Smoke";
 
 export default function HomePage() {
     return (
         <>
 
+            <div className=" text-center">
+                <Jumbotron
+                    title="Benvenuto!"
+                    description="Scopri le nostre offerte."
+                    hero={<Smoke key="hero" height={500} textSize={80} textY={140} />}
+                />
+            </div>
             <div className="container text-center">
-                <div>
-                    <span className='acid-text border border-danger p-2 rounded-2 text-uppercase'>💣Spedizione gratuita per ordini superiori a 99.99€💣</span>
-                </div>
+
                 <div className="row">
-                    <div className="col-12 text-center">
-                        <Jumbotron title="Benvenuto su BoolCore!" description="Scopri i nostri prodotti e le offerte speciali." />
-                    </div>
                     <div className="col-md-4">
                         <JumboCategory
                             title="PC Fissi"

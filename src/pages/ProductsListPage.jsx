@@ -8,6 +8,7 @@ export default function ProductsListPage() {
 
     // Inizializza gli stati dai parametri URL
     const [search, setSearch] = useState(searchParams.get('search') || "");
+    const [query, setQuery] = useState(searchParams.get('search') || "");
     const [priceFilter, setPriceFilter] = useState(searchParams.get('price') || "");
     const [showPromo, setShowPromo] = useState(searchParams.get('promo') === "true");
     const [showRecent, setShowRecent] = useState(searchParams.get('recent') === "true");
@@ -41,14 +42,24 @@ export default function ProductsListPage() {
     return (
         <div className="container">
             <div className="row py-4 align-items-center">
-                <div className="col-md-4 mb-2">
+                <div className="col-md-4 mb-2 d-flex">
                     <input
                         type="text"
                         className="form-control"
                         placeholder="Cerca prodotto..."
-                        value={search}
-                        onChange={e => setSearch(e.target.value)}
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                setSearch(query);
+                            }
+                        }}
+
                     />
+                    <button button onClick={() => setSearch(query)} className="btn btn-light mx-1">
+                        Cerca
+                    </button>
                 </div>
                 <div className="col-md-2 mb-2">
                     <select
@@ -90,19 +101,23 @@ export default function ProductsListPage() {
                     </div>
                 </div>
             </div>
-            {loading && (
-                <div className="d-flex justify-content-center my-5">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Caricamento...</span>
+
+           
+            <div className="mb-3">
+                <span className="text-light">
+                    {products.length === 1
+                        ? '1 prodotto trovato'
+                        : `${products.length} prodotti trovati`}
+                </span>
+            </div>
+            {
+                error && (
+                    <div className="alert alert-danger" role="alert">
+                        {error}
                     </div>
-                </div>
-            )}
-            {error && (
-                <div className="alert alert-danger" role="alert">
-                    {error}
-                </div>
-            )}
+                )
+            }
             {!loading && !error && <ProductsList products={products} />}
-        </div>
+        </div >
     );
 }

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import React, { useState, useEffect } from "react"
 import HomePage from "./pages/HomePage"
 import ProductsList from "./pages/ProductsListPage"
 import SingleProduct from "./pages/SingleProduct"
@@ -17,8 +18,24 @@ import CategoryPage from "./pages/CategoryPage"
 import { CompareProvider } from "./contexts/CompareContext"
 import NotFoundPage from "./pages/NotFoundPage"
 
+import Presentaction from "./Layout/Presentaction"
+
+
 
 export default function App() {
+  const [showPresentation, setShowPresentation] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPresentation(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showPresentation) {
+    // Mostra solo la presentazione
+    return <Presentaction />;
+  }
+
+  // Dopo la presentazione mostra il router e il layout
   return (
 
     <LoaderProvider>
