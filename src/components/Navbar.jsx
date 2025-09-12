@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from "../contexts/CartContext";
+import { useWishlist } from "../contexts/WishlistContext";
 import CompareIndicator from "../components/CompareIndicator";
+import WishlistIndicator from "../components/WishlistIndicatos";
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { totalItems } = useCart();
+    const { wishlistCount } = useWishlist();
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -79,6 +82,7 @@ export default function Navbar() {
 
                     <div className="d-flex align-items-center gap-2">
                         <CompareIndicator />
+                        <WishlistIndicator />
                         <button
                             className="btn btn-outline-light position-relative"
                             type="button"

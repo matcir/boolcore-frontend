@@ -3,9 +3,11 @@ import HomePage from "./pages/HomePage"
 import ProductsList from "./pages/ProductsListPage"
 import SingleProduct from "./pages/SingleProduct"
 import ComparePage from "./pages/ComparePage"
+import WishlistPage from "./pages/WishlistPage"
 import DefaultLayout from "./Layout/defaultLayout"
 import CartSidebar from "./components/CartSidebar"
 import { CartProvider } from "./contexts/CartContext"
+import { WishlistProvider } from "./contexts/WishlistContext"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { DataProvider } from "./contexts/DataContext"
@@ -22,22 +24,25 @@ export default function App() {
     <LoaderProvider>
       <DataProvider>
         <CartProvider>
-          <CompareProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<DefaultLayout />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/products" element={<ProductsList />} />
-                  <Route path="/categories/:slug" element={<CategoryPage />} />
-                  <Route path="/products/:slug" element={<SingleProduct />} />
-                  <Route path="/confronta" element={<ComparePage />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                </Route>
-              </Routes>
-              <CartSidebar />
-            </BrowserRouter>
-          </CompareProvider>
+          <WishlistProvider>
+            <CompareProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<DefaultLayout />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/products" element={<ProductsList />} />
+                    <Route path="/categories/:slug" element={<CategoryPage />} />
+                    <Route path="/products/:slug" element={<SingleProduct />} />
+                    <Route path="/confronta" element={<ComparePage />} />
+                    <Route path="/wishlist" element={<WishlistPage />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Route>
+                </Routes>
+                <CartSidebar />
+              </BrowserRouter>
+            </CompareProvider>
+          </WishlistProvider>
         </CartProvider>
       </DataProvider>
     </LoaderProvider>
