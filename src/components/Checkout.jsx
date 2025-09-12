@@ -19,11 +19,19 @@ export default function Checkout() {
             name: '',
             last_name: '',
             email: '',
+            telefono: '',
             address: '',
             city: '',
             cap: '',
+            provincia: '',
             country: 'Italia',
-            payment_method: ''
+            payment_method: '',
+            card: {
+                holder: '',
+                number: '',
+                expiry: '',
+                cvc: ''
+            }
         },
         shipping: {
             name: '',
@@ -31,18 +39,30 @@ export default function Checkout() {
             address: '',
             city: '',
             cap: '',
+            provincia: '',
             country: 'Italia'
         },
         sameAsBilling: true
     });
 
-    const handleInputChange = (e, section) => {
+    const handleInputChange = (e, section, subSection) => {
         const { name, value, type, checked } = e.target;
 
         if (type === 'checkbox') {
             setFormData(prev => ({
                 ...prev,
                 [name]: checked
+            }));
+        } else if (subSection) {
+            setFormData(prev => ({
+                ...prev,
+                [section]: {
+                    ...prev[section],
+                    [subSection]: {
+                        ...prev[section][subSection],
+                        [name]: value
+                    }
+                }
             }));
         } else {
             setFormData(prev => ({
@@ -117,6 +137,23 @@ export default function Checkout() {
                             <h5 className="mb-0">Riepilogo Ordine</h5>
                         </div>
                         <div className="card-body">
+                            {items.map(item => (
+                                <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <small className="d-block">{item.product_name}</small>
+                                        <small className="text-muted">Qty: {item.quantity}</small>
+                                    </div>
+                                    <small>€ {(item.price * item.quantity).toFixed(2)}</small>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="card mt-3">
+                        <div className="card-header">
+                            <h6 className="mb-0">Prodotti nel carrello</h6>
+                        </div>
+                        <div className="card-body">
                             <div className="d-flex justify-content-between mb-2">
                                 <span>Prodotti ({totalItems})</span>
                                 <span>€ {total.toFixed(2)}</span>
@@ -146,23 +183,7 @@ export default function Checkout() {
                                 <span>€ {finalTotal.toFixed(2)}</span>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="card mt-3">
-                        <div className="card-header">
-                            <h6 className="mb-0">Prodotti nel carrello</h6>
-                        </div>
-                        <div className="card-body">
-                            {items.map(item => (
-                                <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
-                                    <div>
-                                        <small className="d-block">{item.product_name}</small>
-                                        <small className="text-muted">Qty: {item.quantity}</small>
-                                    </div>
-                                    <small>€ {(item.price * item.quantity).toFixed(2)}</small>
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
                 <div className="col-lg-8 order-lg-1">
@@ -291,6 +312,62 @@ export default function Checkout() {
                                         <option value="contrassegno">Contrassegno</option>
                                     </select>
                                 </div>
+                                {formData.billing.payment_method === "carta_credito" && (
+                                    <div className="alert alert-secondary mt-3">
+                                        <h6>Dati Carta di Credito</h6>
+                                        <div className="mb-2">
+                                            <label className="form-label">Nome Intestatario *</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="holder"
+                                                value={formData.billing.card.holder}
+                                                onChange={(e) => handleInputChange(e, 'billing', 'card')}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <label className="form-label">Numero Carta *</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="number"
+                                                maxLength={16}
+                                                pattern="\d{16}"
+                                                value={formData.billing.card.number}
+                                                onChange={(e) => handleInputChange(e, 'billing', 'card')}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <label className="form-label">Scadenza (MM/YY) *</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="expiry"
+                                                placeholder="MM/YY"
+                                                maxLength={5}
+                                                pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                                                value={formData.billing.card.expiry}
+                                                onChange={(e) => handleInputChange(e, 'billing', 'card')}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <label className="form-label">CVC *</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="cvc"
+                                                maxLength={3}
+                                                pattern="\d{3}"
+                                                value={formData.billing.card.cvc}
+                                                onChange={(e) => handleInputChange(e, 'billing', 'card')}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="card mb-4">

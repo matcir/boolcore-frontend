@@ -101,12 +101,20 @@ export default function ProductsListPage() {
                     </div>
                 </div>
             </div>
-            {
-                loading && (
-                    <div className="d-flex justify-content-center my-5">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Caricamento...</span>
-                        </div>
+
+           
+            <div className="mb-3">
+                <span className="text-light">
+                    {products.length === 1
+                        ? '1 prodotto trovato'
+                        : `${products.length} prodotti trovati`}
+                </span>
+            </div>
+            {loading && (
+                <div className="d-flex justify-content-center my-5">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Caricamento...</span>
+
                     </div>
                 )
             }
