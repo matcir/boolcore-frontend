@@ -113,7 +113,7 @@ export default function SingleProduct() {
 
     return (
         <>
-            <div className="container pb-5">
+            <div className="container pb-5 pt-5">
                 {showAlert && (
                     <div
                         className="alert alert-success alert-dismissible fade show position-fixed"
@@ -138,8 +138,8 @@ export default function SingleProduct() {
                 )}
 
                 {/* prodotto principale */}
-                <div className="card mt-4">
-                    <div className="card-body">
+                <div className="card ">
+                    <div className="card-body ">
                         <CarouselCard product={singleProduct} />
                         <div className="d-flex justify-content-end mt-3 mb-4">
                             <button

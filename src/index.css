@@ -4,11 +4,16 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  outline: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
 .bg-color-boolcore {
-  padding-top: 10px;
   background-color: #0b121f;
   /* background-image: url(../img/bg-home.jpg); */
   background-repeat: no-repeat;
@@ -30,16 +35,11 @@
   border-radius: 10px;
 }
 .card-body-fissi {
-  background-color: rgba(
-    73,
-    87,
-    94,
-    0.9
-  ); /* 0.7 = opacità, puoi variare tra 0.5 e 0.9 */
+  background-color: rgba(73, 87, 94, 0.9);
 }
 
 .bg-color-jumbo {
-  background-color: rgba(32, 48, 0, 0.9);
+  background-color: rgba(32, 48, 0, 0.3);
   border: solid 1px rgb(97, 138, 97);
 }
 
@@ -60,8 +60,36 @@
   font-size: 18px;
 }
 
+.jumbotron-wrapper {
+  min-height: 300px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* aggiungi questo */
+}
+
+.jumbotron-hero-bg img,
+.jumbotron-hero-bg {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.jumbotron {
+  position: relative;
+  z-index: 1;
+  width: 550px; /* Cambia la larghezza massima */
+  margin: 0 auto;
+}
 .jumbotron p {
   font-size: 20px;
+}
+
+.led-border {
+  border: 2px solid #ff5100;
+  border-radius: 8px;
 }
 
 .bg-color-footer {
