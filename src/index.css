@@ -55,10 +55,17 @@ body {
   background-color: rgba(17, 27, 47, 0.8);
   border: solid 1px rgb(97, 138, 97);
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 16px;
+  align-items: center;
 }
 
-.card-jumbo p {
-  font-size: 18px;
+.card-jumbo .card-body {
+  flex-grow: 1;
 }
 
 .jumbotron-wrapper {
@@ -67,7 +74,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* aggiungi questo */
+  overflow: hidden;
 }
 
 .jumbotron-hero-bg img,
@@ -81,7 +88,7 @@ body {
 .jumbotron {
   position: relative;
   z-index: 1;
-  width: 550px; /* Cambia la larghezza massima */
+  width: 550px;
   margin: 0 auto;
 }
 .jumbotron p {
@@ -146,13 +153,14 @@ body {
   background-color: white;
   border: solid 2px white;
   border-radius: 16px;
-  padding: 20px;
-  margin-inline: 16px;
+  padding: 10px;
+
+  margin: 0 10px;
 }
 
 .img-rounded-frame > img {
   width: 100%;
-  height: 250px;
+  height: 200px;
   object-fit: contain;
   display: block;
   border-radius: 0;

@@ -15,7 +15,7 @@ export default function Jumbotron({ title, description, hero }) {
 				</div>
 			)}
 			<div
-				className="jumbotron p-3 bg-color-jumbo rounded-4"
+				className="jumbotron p-2 bg-color-jumbo rounded-4"
 				style={{
 					position: "absolute",
 					left: "50%",

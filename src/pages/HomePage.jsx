@@ -17,8 +17,9 @@ export default function HomePage() {
             </div>
             <div className="container text-center">
 
-                <div className="row">
-                    <div className="col-md-4">
+                <div className="row align-items: center;">
+
+                    <div className="col-md-4 d-flex">
                         <JumboCategory
                             title="PC Fissi"
                             description="Scopri la nostra selezione di computer desktop."
@@ -26,7 +27,7 @@ export default function HomePage() {
                             img_cover="./img/desktop.jpg"
                         />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 d-flex">
                         <JumboCategory
                             title="Portatili"
                             description="Scopri la nostra selezione di computer Laptop."
@@ -34,7 +35,7 @@ export default function HomePage() {
                             img_cover="./img/notebook.jpg"
                         />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 d-flex">
                         <JumboCategory
                             title="Accessori"
                             description="Tastiere, mouse, cuffie e molto altro per il tuo setup."
@@ -45,11 +46,11 @@ export default function HomePage() {
 
 
                     <section className="mt-4">
-                        <h1 className="acid-text text-uppercase text-center">ultimi arrivi</h1>
+                        <h1 className="acid-text text-uppercase text-center mb-2 mt-5">ultimi arrivi</h1>
                         <LatestArrivals />
                     </section>
-                    <section className="mt-4">
-                        <h1 className="acid-text text-uppercase text-center">più venduti</h1>
+                    <section className="mt-4 mb-5">
+                        <h1 className="acid-text text-uppercase text-center mb-2 mt-5">più venduti</h1>
                         <BestSellers />
                     </section>
 

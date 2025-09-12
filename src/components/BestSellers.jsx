@@ -22,32 +22,34 @@ export default function BestSellers() {
 
     return (
 
-        <div className="row">
-            {product.map((product) => (
-                <div key={product.id} className="col-md-4">
-                    <div className="card-jumbo rounded-4">
-                        <Link to={`/products/${slugify(product.product_name, {
-                            lower: true,
-                            strict: true,
-                        })}`} className="text-decoration-none text-reset" >
-                            <div className="img-rounded-frame">
-                                <img
-                                    src={`http://localhost:3000/${product.images?.[0]}`}
-                                    alt={product.name}
-                                    className="card-img-top"
-                                />
-                            </div>
-                            <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                                <h3 className="acid-text">{product.product_name}</h3>
-                                <p className="gray-text">{product.description}</p>
-                                <span className="gray-text ">{product.price} €</span>
-                                <span className="btn btn-success m-2">Visualizza dettagli</span>
-                            </div>
+        <div className="container">
+            <div className="row align-items-stretch">
+                {product.map((product) => (
+                    <div key={product.id} className="col-md-4">
+                        <div className="card-jumbo rounded-4">
+                            <Link to={`/products/${slugify(product.product_name, {
+                                lower: true,
+                                strict: true,
+                            })}`} className="text-decoration-none text-reset" >
+                                <div className="img-rounded-frame">
+                                    <img
+                                        src={`http://localhost:3000/${product.images?.[0]}`}
+                                        alt={product.name}
+                                        className="card-img-top"
+                                    />
+                                </div>
+                                <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                                    <h3 className="acid-text">{product.product_name}</h3>
+                                    <p className="gray-text">{product.description}</p>
+                                    <span className="gray-text ">{product.price} €</span>
+                                    <span className="btn btn-success m-2">Visualizza dettagli</span>
+                                </div>
 
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 }
