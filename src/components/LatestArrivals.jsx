@@ -30,11 +30,13 @@ export default function LatestArrivals() {
                             lower: true,
                             strict: true,
                         })}`} className="text-decoration-none text-reset" >
-                            <img
-                                src={`http://localhost:3000/${product.images?.[0]}`}
-                                alt={product.name}
-                                className="card-img-top"
-                            />
+                            <div className="img-rounded-frame">
+                                <img
+                                    src={`http://localhost:3000/${product.images?.[0]}`}
+                                    alt={product.name}
+                                    className="card-img-top"
+                                />
+                            </div>
                             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                                 <h3 className="acid-text">{product.product_name}</h3>
                                 <p className="gray-text">{product.description}</p>

@@ -139,3 +139,21 @@ body {
   width: 250px;
   object-fit: contain;
 }
+
+.img-rounded-frame {
+  margin-top: 15px;
+  display: inline-block;
+  background-color: white;
+  border: solid 2px white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-inline: 16px;
+}
+
+.img-rounded-frame > img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+}
