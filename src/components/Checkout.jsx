@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
 
 export default function Checkout() {
-    const { items, total, totalItems } = useCart();
+    const { items, total, totalItems, clearCart } = useCart();
+    const navigate = useNavigate()
 
     const shippingConfig = {
         freeShippingThreshold: 100,
@@ -106,6 +108,8 @@ export default function Checkout() {
                 const result = await response.json();
                 alert('Ordine creato con successo!');
                 console.log('Invoice creata:', result);
+                clearCart()
+                navigate('/thankspage')
             } else {
                 throw new Error('Errore nella creazione dell\'ordine');
             }
