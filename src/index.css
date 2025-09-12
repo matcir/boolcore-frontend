@@ -54,6 +54,7 @@ body {
 .card-jumbo {
   background-color: rgba(17, 27, 47, 0.8);
   border: solid 1px rgb(97, 138, 97);
+  overflow: hidden;
 }
 
 .card-jumbo p {
@@ -99,6 +100,8 @@ body {
 .card-img-top {
   height: 250px;
   object-fit: contain;
+  display: block;
+  padding: 16px;
 }
 
 .img-car {
