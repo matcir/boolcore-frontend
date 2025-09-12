@@ -54,7 +54,10 @@ export default function CartSidebar() {
                     <>
                         <ul className="list-group mb-3 flex-grow-1 overflow-auto">
                             {items.map((item) => (
-                                <CartItem key={item.id} item={item} />
+                                <CartItem key={item.id} item={item} onCloseCart={() => {
+                                    const closeButton = document.querySelector('[data-bs-dismiss="offcanvas"]');
+                                    if (closeButton) closeButton.click()
+                                }} />
                             ))}
                         </ul>
                         <div className="mt-auto">

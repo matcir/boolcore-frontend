@@ -1,9 +1,22 @@
 import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
+import slugify from "slugify";
+import { useNavigate } from "react-router-dom";
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, onCloseCart }) {
     const { removeFromCart, incrementQuantity, decrementQuantity } = useCart();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+    const navigate = useNavigate();
+
+    const NavigateToProduct = () => {
+        const slug = slugify(item.product_name, { lower: true });
+        navigate(`/products/${slugify(item.product_name, {
+            lower: true,
+            strict: true,
+        })}`);
+        if (onCloseCart) onCloseCart();
+    };
 
     const handleDecreaseQuantity = () => {
         if (item.quantity <= 1) {
@@ -31,7 +44,7 @@ export default function CartItem({ item }) {
     return (
         <>
             <li className="list-group-item d-flex justify-content-between align-items-center">
-                <div className="flex-grow-1">
+                <div className="flex-grow-1" style={{ cursor: "pointer" }} onClick={NavigateToProduct}>
                     <h6 className="mb-1">{item.product_name}</h6>
                     <div>
                         {hasDiscount ? (
@@ -49,6 +62,7 @@ export default function CartItem({ item }) {
                         )}
                     </div>
                 </div>
+
                 <div className="d-flex align-items-center">
                     <div className="btn-group me-2" role="group">
                         <button

@@ -11,9 +11,9 @@ export default function NotFoundPage() {
                 </h4>
 
                 <Link to="/">
-                    <a className="btn btn-success mt-4 px-4 py-2 rounded">
+                    <button className="btn btn-success mt-4 px-4 py-2 rounded">
                         Torna alla Home
-                    </a>
+                    </button>
                 </Link>
             </div>
         </>
