@@ -93,10 +93,10 @@ export default function ComparePage() {
         return (
             <div className="container ">
                 <div className="text-center pt-5">
-                    <i className="bi bi-bar-chart display-1 text-muted"></i>
-                    <h2 className="mt-3">Nessun prodotto da confrontare</h2>
-                    <p className="text-muted">Aggiungi alcuni prodotti per iniziare il confronto</p>
-                    <Link to="/" className="btn btn-primary">
+                    <i className="bi bi-bar-chart display-1 text-light"></i>
+                    <h2 className="mt-3 text-light">Nessun prodotto da confrontare</h2>
+                    <p className="text-light">Aggiungi alcuni prodotti per iniziare il confronto</p>
+                    <Link to="/" className="btn btn-success">
                         <i className="bi bi-arrow-left me-2"></i>
                         Torna ai prodotti
                     </Link>
