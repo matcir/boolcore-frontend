@@ -88,7 +88,7 @@ body {
 .jumbotron {
   position: relative;
   z-index: 1;
-  width: 550px;
+  width: 90%;
   margin: 0 auto;
 }
 .jumbotron p {
@@ -164,4 +164,32 @@ body {
   object-fit: contain;
   display: block;
   border-radius: 0;
+}
+
+@media (max-width: 424px) {
+  .jumbotron {
+    width: 95%;
+    font-size: 20px;
+    padding: 16px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    border-radius: 16px;
+  }
+  .jumbotron p {
+    font-size: 18px;
+  }
+
+  .led-border {
+    height: auto;
+    min-height: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 12px 0;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
