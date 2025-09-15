@@ -41,7 +41,7 @@ export default function ProductsListPage() {
 
     return (
         <div className="container">
-            <div className="row py-4 align-items-center sticky-top bg-dark rounded mb-3" style={{ top: "6rem", zIndex: 1020 }}>
+            <div className="row py-4 align-items-center bg-dark rounded mb-3">
                 <div className="col-md-4 mb-2 d-flex">
                     <input
                         type="text"
@@ -99,19 +99,19 @@ export default function ProductsListPage() {
                             Più recenti
                         </label>
                     </div>
-                    
+
                 </div>
                 <div className="col-md-2 mb-2">
-                        <span className="text-light">
-                            {products.length === 1
-                                ? '1 prodotto trovato'
-                                : `${products.length} prodotti trovati`}
-                        </span>
-                    </div>
+                    <span className="text-light">
+                        {products.length === 1
+                            ? '1 prodotto trovato'
+                            : `${products.length} prodotti trovati`}
+                    </span>
+                </div>
             </div>
 
-           
-            
+
+
             {
                 error && (
                     <div className="alert alert-danger" role="alert">
