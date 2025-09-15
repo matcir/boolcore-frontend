@@ -126,14 +126,14 @@ export default function SingleProduct() {
                     p.id !== singleProduct.id &&
                     p.product_name &&
                     p.product_name.split(" ")[0].toLowerCase() === firstWord
-            )
+            ).slice(0, 4)
         } else {
             relatedProducts = products.filter(
                 (p) =>
                     p.id !== singleProduct.id &&
                     p.category_name &&
                     p.category_name.toLowerCase().trim() === category
-            )
+            ).slice(0, 4)
         }
     }
 
