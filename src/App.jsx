@@ -24,17 +24,7 @@ import ThanksPage from "./pages/ThanksPage"
 
 
 export default function App() {
-  const [showPresentation, setShowPresentation] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowPresentation(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (showPresentation) {
-    // Mostra solo la presentazione
-    return <Presentaction />;
-  }
 
   // Dopo la presentazione mostra il router e il layout
   return (
