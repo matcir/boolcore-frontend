@@ -235,7 +235,7 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
                     })}`}
                     className="btn btn-sm btn-warning"
                   >
-                    View Product
+                    Visualizza Prodotto
                   </Link>
                 </div>
               </div>
