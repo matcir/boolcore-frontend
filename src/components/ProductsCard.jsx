@@ -62,23 +62,23 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
           <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
         </div>
       )}
-      {viewMode === 'grid' ? (// GRIGLIA 
 
-        <div className="card h-100">
+      {viewMode === 'grid' ? (
+        // VISUALIZZAZIONE GRIGLIA - Card con altezza fissa
+        <div className="card h-100 d-flex flex-column">
           <Link
             to={`/products/${slugify(product.product_name, {
               lower: true,
               strict: true,
             })}`}
-            className="d-flex"
+            className="d-block"
           >
-            <div className="card-img position-relative">
+            <div className="card-img position-relative" style={{ height: '250px', overflow: 'hidden' }}>
               <img
                 src={`http://localhost:3000/${product.images?.[0]}`}
                 alt={product.product_name}
-                className={
-                  viewMode === "grid" ? "product-img-fixed px-2" : "img-list"
-                }
+                className="w-100 h-100 px-2"
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
               />
               <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1">
                 {isInCompare(product.id) && (
@@ -95,30 +95,45 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
             </div>
           </Link>
 
-          <div className="card-body text-center">
-            <h4 className="card-title">{product?.product_name}</h4>
-            <div className="">
-              {product?.discount > 0 ?
+          <div className="card-body text-center d-flex flex-column flex-grow-1">
+            <h4 className="card-title" style={{ minHeight: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {product?.product_name}
+            </h4>
+
+            {/* Contenitore per il prezzo con altezza fissa */}
+            <div className="mb-3" style={{ minHeight: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              {product?.discount > 0 ? (
                 <>
-                  <span className="badge text-bg-success">
+                  <span className="badge text-bg-success mb-1">
                     -{parseFloat(product?.discount * 100).toFixed(0)}%
                   </span>
-                  <p className="card-text text-decoration-line-through">
+                  <p className="card-text text-decoration-line-through mb-1 small">
                     {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
                   </p>
-                  <p className="card-text text-danger fs-5">
+                  <p className="card-text text-danger fs-5 mb-0">
                     {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
                   </p>
                 </>
-                :
-                <p className="card-text">
+              ) : (
+                <p className="card-text fs-5 mb-0">
                   {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
                 </p>
-              }
+              )}
             </div>
-            <p className="card-text">{product?.description}</p>
 
-            <div className="d-flex gap-2 justify-content-center flex-wrap mt-2">
+            {/* Descrizione con altezza limitata */}
+            <p className="card-text flex-grow-1" style={{
+              maxHeight: '4rem',
+              overflow: 'hidden',
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical'
+            }}>
+              {product?.description}
+            </p>
+
+            {/* Pulsanti sempre in fondo */}
+            <div className="d-flex gap-2 justify-content-center flex-wrap mt-auto">
               <button
                 className={`btn btn-sm ${isInWishlist(product.id) ? 'btn-danger' : 'btn-outline-danger'}`}
                 onClick={handleWishlistToggle}
@@ -138,28 +153,27 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
             </div>
           </div>
         </div>
+      ) : (
+        // VISUALIZZAZIONE LISTA - Layout migliorato
+        <div className="card mb-3">
+          <h2 className="card-title py-3 text-center mb-0">{product?.product_name}</h2>
+          <div className="row g-0 align-items-center">
 
-
-      ) : (//LISTA
-        <div className="card">
-          <h2 className="card-title py-3 text-center">{product?.product_name}</h2>
-          <div className="row">
-            {/* IMMAGINE */}
-            <div className="col-12 col-md-3 d-flex pb-3">
+            {/* IMMAGINE - Dimensioni fisse */}
+            <div className="col-12 col-md-3">
               <Link
                 to={`/products/${slugify(product.product_name, {
                   lower: true,
                   strict: true,
                 })}`}
-                className="flex-start"
+                className="d-block p-3"
               >
-                <div className="card-img position-relative ps-5">
+                <div className="position-relative" style={{ height: '200px' }}>
                   <img
                     src={`http://localhost:3000/${product.images?.[0]}`}
                     alt={product.product_name}
-                    className={
-                      viewMode === "grid" ? "product-img-fixed px-2" : "img-list img-fluid"
-                    }
+                    className="w-100 h-100"
+                    style={{ objectFit: 'contain', objectPosition: 'center' }}
                   />
                   <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1">
                     {isInCompare(product.id) && (
@@ -178,40 +192,37 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
             </div>
 
             {/* DESCRIZIONE, PREZZO E PULSANTI */}
-            <div className="col-12 col-md-5 d-flex align-items-center justify-content-center">
-              <div className="d-flex flex-column align-items ps-2 gap-3">
+            <div className="col-12 col-md-5 p-3">
+              <div className="d-flex flex-column h-100 gap-3">
+
                 {/* PREZZO */}
-                <div className="">
+                <div className="text-center">
                   {product?.discount > 0 ? (
-                    <>
-                      <div className="d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                          <span className="badge text-bg-success">
-                            -{parseFloat(product?.discount * 100).toFixed(0)}%
-                          </span>
-                        </div>
-                        <div>
-                          <p className="card-text text-decoration-line-through">
-                            {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
-                          </p>
-                        </div>
-                        <p className="card-text text-danger fs-5">
-                          {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
-                        </p>
-                      </div>
-                    </>
+                    <div className="d-flex flex-row justify-content-center align-items-center gap-3">
+                      <span className="badge text-bg-success">
+                        -{parseFloat(product?.discount * 100).toFixed(0)}%
+                      </span>
+                      <span className="text-decoration-line-through text-muted">
+                        {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
+                      </span>
+                      <span className="text-danger fs-4 fw-bold">
+                        {product?.price ? `${parseFloat(product.price - (product.price * product.discount)).toFixed(2)}€` : ""}
+                      </span>
+                    </div>
                   ) : (
-                    <p className="card-text">
+                    <span className="fs-4 fw-bold">
                       {product?.price ? `${parseFloat(product.price).toFixed(2)}€` : ""}
-                    </p>
+                    </span>
                   )}
                 </div>
 
                 {/* SPEDIZIONE */}
-                <p className="small x-2">Spedizione Gratuita con un ordine di 100,00 €</p>
+                <p className="small text-center text-muted mb-0">
+                  Spedizione Gratuita con un ordine di 100,00 €
+                </p>
 
                 {/* BOTTONI */}
-                <div className="d-flex gap-2 justify-content-center mt-2">
+                <div className="d-flex gap-2 justify-content-center flex-wrap">
                   <button
                     className={`btn btn-sm ${isInWishlist(product.id) ? 'btn-danger' : 'btn-outline-danger'}`}
                     onClick={handleWishlistToggle}
@@ -228,6 +239,7 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
                     <i className={`bi ${isInCompare(product.id) ? 'bi-dash-circle' : 'bi-bar-chart'} me-1`}></i>
                     {isInCompare(product.id) ? 'Rimuovi confronto' : 'Confronta'}
                   </button>
+
                   <Link
                     to={`/products/${slugify(product.product_name, {
                       lower: true,
@@ -242,14 +254,20 @@ export default function ProductsCard({ product, viewMode = "grid" }) {
             </div>
 
             {/* DETTAGLI */}
-            <div className="col-12 col-md-4 d-flex justify-content-center">
-              <ul className="list-unstyled d-flex flex-column justify-content-center">
-                {Object.entries(product.details).map(([key, value]) => (
-                  <li key={key}>
-                    <strong className="px-1">{key.replaceAll('_', ' ').toUpperCase()}:</strong> {value}
-                  </li>
-                ))}
-              </ul>
+            <div className="col-12 col-md-4 p-3 border-start">
+              <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                <h6 className="text-muted mb-3">Dettagli prodotto:</h6>
+                <ul className="list-unstyled">
+                  {Object.entries(product.details || {}).map(([key, value]) => (
+                    <li key={key} className="mb-1">
+                      <strong className="text-capitalize">
+                        {key.replaceAll('_', ' ')}:
+                      </strong>{' '}
+                      <span className="text-muted">{value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
