@@ -63,10 +63,10 @@ export default function WishlistPage() {
         return (
             <div className="container py-5">
                 <div className="text-center pt-4">
-                    <i className="fas fa-heart text-muted" style={{ fontSize: '4rem' }}></i>
+                    <i className="fas fa-heart text-light" style={{ fontSize: '4rem' }}></i>
                     <h2 className="mt-3 text-light">La tua wishlist è vuota</h2>
-                    <p className="text-muted">Aggiungi i tuoi prodotti preferiti alla wishlist per trovarli facilmente!</p>
-                    <Link to="/products" className="btn btn-primary mt-3">
+                    <p className="text-light">Aggiungi i tuoi prodotti preferiti alla wishlist per trovarli facilmente!</p>
+                    <Link to="/products" className="btn btn-success mt-3">
                         <i className="fas fa-shopping-bag me-2"></i>
                         Scopri i prodotti
                     </Link>

@@ -131,8 +131,8 @@ export default function Checkout() {
     }
 
     return (
-        <div className="container mt-4 mb-5">
-            <h1 className="mb-4">Checkout</h1>
+        <div className="container pt-4 pb-5">
+            <h1 className="mb-4 text-light">Checkout</h1>
 
             <div className="row">
                 <div className="col-lg-4 order-lg-2 mb-4">
