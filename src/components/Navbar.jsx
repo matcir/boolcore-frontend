@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from "../contexts/CartContext";
 import { useWishlist } from "../contexts/WishlistContext";
@@ -10,9 +10,28 @@ export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { totalItems } = useCart();
     const { wishlistCount } = useWishlist();
+    const dropdownRef = useRef(null);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleCategoryClick = () => {
+        setIsDropdownOpen(false);
+        setIsMenuOpen(false);
+    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
@@ -41,12 +60,16 @@ export default function Navbar() {
                 <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/products">
+                            <Link
+                                className="nav-link"
+                                to="/products"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
                                 <i className="fas fa-boxes me-1"></i>
                                 Tutti i prodotti
                             </Link>
                         </li>
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" ref={dropdownRef}>
                             <a
                                 className="nav-link dropdown-toggle"
                                 href="#"
@@ -59,19 +82,31 @@ export default function Navbar() {
                             </a>
                             <ul className={`dropdown-menu dropdown-menu-dark ${isDropdownOpen ? 'show' : ''}`}>
                                 <li>
-                                    <Link className="dropdown-item" to="/categories/pc-fissi">
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/categories/pc-fissi"
+                                        onClick={handleCategoryClick}
+                                    >
                                         <i className="fas fa-desktop me-2"></i>
                                         PC Fissi
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" to="/categories/portatili">
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/categories/portatili"
+                                        onClick={handleCategoryClick}
+                                    >
                                         <i className="fas fa-laptop me-2"></i>
                                         Portatili
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" to="/categories/accessori">
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/categories/accessori"
+                                        onClick={handleCategoryClick}
+                                    >
                                         <i className="fas fa-keyboard me-2"></i>
                                         Accessori
                                     </Link>
