@@ -59,7 +59,7 @@ export default function HomePage() {
                     <h1 className="acid-text text-uppercase text-center mb-2 mt-5">ultimi arrivi</h1>
                     <LatestArrivals />
                 </section>
-                <section className="mt-4 mb-5">
+                <section className="mt-4 pb-5">
                     <h1 className="acid-text text-uppercase text-center mb-2 mt-5">più venduti</h1>
                     <BestSellers />
                 </section>
